@@ -18,7 +18,8 @@ public class Rhythm {
 			new PhraseChunk(conf),
 			new ClauseChunk(),
 			new ThemeRhemeChunk(),
-			new BeatGenerator());
+			new BeatGenerator(),
+			new BrowsGenerator());
 	}
 	
 	public Iterable<Sentence> process(String input) {
