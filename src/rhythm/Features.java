@@ -2,6 +2,8 @@ package rhythm;
 
 import java.util.Map;
 
+import com.google.common.base.Objects;
+import com.google.common.base.Predicate;
 import com.google.common.collect.Maps;
 
 public class Features {
@@ -35,6 +37,18 @@ public class Features {
 	@Override
 	public String toString() {
 		return features.toString();
+	}
+	
+	public static <T> Predicate<Features> has_(final Feature<T> key, final T value) {
+		return new Predicate<Features> () {
+			public boolean apply(Features input) {
+				return Objects.equal(input.get(key), value);
+			}
+		};
+	}
+	
+	public static <T> Predicate<Features> is_(Feature<Void> key) {
+		return has_(key, null);
 	}
 	
 	public static final Feature<String> TAG = Feature.named("TAG");

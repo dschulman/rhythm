@@ -1,5 +1,8 @@
 package rhythm;
 
+import static com.google.common.collect.Iterables.any;
+import static rhythm.Features.has_;
+
 public class ClauseChunk implements Processor {
 	public void process(Sentence s) {
 		Intervals clauses = new Intervals();
@@ -9,14 +12,11 @@ public class ClauseChunk implements Processor {
 		for (Interval phrase : s.get(Features.PHRASES)) {
 			low = Math.min(phrase.low(), low);
 			high = Math.max(phrase.high(), high);
-			for (Token t : s.tokensIn(phrase)) {
-				WordClass wclass = t.get(Features.CLASS);
-				if (wclass == WordClass.Verb)
-					hasVerb = true;
-			}
+			hasVerb = hasVerb || 
+				any(s.tokensIn(phrase), has_(Features.CLASS, WordClass.Verb));
 			if (hasVerb && (s.size() > high)) {
 				Token next = s.tokens().get(high);
-				if (next.get(Features.CLASS)== WordClass.Punctuation) {
+				if (next.get(Features.CLASS) == WordClass.Punctuation) {
 					clauses.add(low, high);
 					low = Integer.MAX_VALUE;
 					high = Integer.MIN_VALUE;

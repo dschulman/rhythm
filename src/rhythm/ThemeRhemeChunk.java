@@ -1,5 +1,8 @@
 package rhythm;
 
+import static com.google.common.collect.Iterables.any;
+import static rhythm.Features.is_;
+
 public class ThemeRhemeChunk implements Processor {
 	public void process(Sentence s) {
 		Intervals themes = new Intervals();
@@ -65,11 +68,7 @@ public class ThemeRhemeChunk implements Processor {
 	}
 	
 	private boolean anyFocused(Sentence s, Interval i) {
-		if (i!=null)
-			for (Token t : s.tokensIn(i))
-				if (t.is(Features.NEW))
-					return true;
-		return false;
+		return (i != null) && any(s.tokensIn(i), is_(Features.NEW));
 	}
 	
 	private void maybeAdd(Intervals ints, Interval i) {
