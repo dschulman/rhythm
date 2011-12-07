@@ -3,10 +3,12 @@ package rhythm;
 import java.io.IOException;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
 
 public class Rhythm {
 	private final ToSentences toSentences;
 	private final ImmutableList<Processor> procs;
+	private final Compiler output;
 	
 	public Rhythm(Configuration conf) throws IOException {
 		this.toSentences = new ToSentences(conf);
@@ -20,13 +22,14 @@ public class Rhythm {
 			new ThemeRhemeChunk(),
 			new BeatGenerator(),
 			new BrowsGenerator());
+		this.output = Compiler.ToString;
 	}
 	
-	public Iterable<Sentence> process(String input) {
+	public Iterable<String> process(String input) {
 		Iterable<Sentence> ss = toSentences.process(input);
 		for (Sentence s : ss)
 			for (Processor p : procs)
 				p.process(s);
-		return ss;
+		return Iterables.transform(ss, output);
 	}
 }

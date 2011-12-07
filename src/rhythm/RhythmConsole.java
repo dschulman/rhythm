@@ -14,10 +14,9 @@ public class RhythmConsole {
 	
 	public void run() throws IOException {
 		String input;
-		while ((input = console.readLine("> ")) != null) {
-			Iterable<Sentence> output = rhythm.process(input);
-			System.out.println(output);
-		}
+		while ((input = console.readLine("> ")) != null)
+			for (String output : rhythm.process(input))
+				System.out.println(output);
 	}
 	
 	public static void main(String[] args) throws IOException {
