@@ -2,8 +2,7 @@ package rhythm;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-import java.util.Comparator;
-
+import com.google.common.collect.Ordering;
 import com.google.common.primitives.Ints;
 
 public class Interval extends Features {
@@ -46,10 +45,15 @@ public class Interval extends Features {
 		return "["+low+","+high+")->" + super.toString();
 	}
 	
-	public static final Comparator<Interval> CompareLow = new Comparator<Interval>() {
+	public static final Ordering<Interval> CompareLow = new Ordering<Interval>() {
 		public int compare(Interval lhs, Interval rhs) {
 			return Ints.compare(lhs.low, rhs.low);
 		}
 	};
 
+	public static final Ordering<Interval> CompareHigh = new Ordering<Interval>() {
+		public int compare(Interval lhs, Interval rhs) {
+			return Ints.compare(lhs.high, rhs.high);
+		}
+	};
 }

@@ -22,7 +22,7 @@ public class Rhythm {
 			new ThemeRhemeChunk(),
 			new BeatGenerator(),
 			new BrowsGenerator());
-		this.output = Compiler.ToString;
+		this.output = new BeatXmlCompiler();
 	}
 	
 	public Iterable<String> process(String input) {

@@ -1,13 +1,22 @@
 package rhythm;
 
+import static com.google.common.collect.Iterators.peekingIterator;
+import static rhythm.Interval.CompareHigh;
+import static rhythm.Interval.CompareLow;
+
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import com.google.common.base.Function;
 import com.google.common.base.Objects;
+import com.google.common.collect.AbstractIterator;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.google.common.collect.PeekingIterator;
+import com.google.common.collect.Sets;
 
 public class Sentence extends Features {
 	private final ImmutableList<Token> tokens;
@@ -63,6 +72,33 @@ public class Sentence extends Features {
 	
 	public void add(Behavior b) {
 		behaviors.add(b);
+	}
+	
+	public Iterable<AnnotatedToken> annotated() {
+		return new Iterable<AnnotatedToken>() {
+			public Iterator<AnnotatedToken> iterator() {
+				final PeekingIterator<Behavior> starting =
+					peekingIterator(CompareLow.sortedCopy(behaviors).iterator());
+				final PeekingIterator<Behavior> ending = 
+					peekingIterator(CompareHigh.sortedCopy(behaviors).iterator());
+				return new AbstractIterator<AnnotatedToken>() {
+					int n = 0;
+					protected AnnotatedToken computeNext() {
+						if (n > tokens.size())
+							return endOfData();
+						Token t = (n==tokens.size()) ? null : tokens.get(n);
+						n++;
+						Set<Behavior> tStarting = Sets.newTreeSet(CompareHigh);
+						while (starting.hasNext() && starting.peek().low()<=n)
+							tStarting.add(starting.next());
+						Set<Behavior> tEnding = Sets.newTreeSet(CompareLow);
+						while (ending.hasNext() && ending.peek().high()<=n)
+							tEnding.add(ending.next());
+						return new AnnotatedToken(t, tStarting, tEnding);
+					}
+				};
+			}
+		};
 	}
 	
 	@Override
