@@ -1,6 +1,6 @@
 package rhythm;
 
-public class TagFeatureExtract implements Processor {
+public class TagFeatureExtract extends Processor {
 	public void process(Sentence s) {
 		for (Token t : s.tokens()) {
 			String tag = t.get(Features.TAG);

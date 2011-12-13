@@ -9,7 +9,7 @@ import java.util.Set;
 import com.google.common.base.Objects;
 import com.google.common.collect.Sets;
 
-public class MarkNew implements Processor {
+public class MarkNew extends Processor {
 	private static final class DiscourseEntity {
 		private final String lemma;
 		private final WordNumber number;
@@ -36,7 +36,6 @@ public class MarkNew implements Processor {
 	
 	private final Set<DiscourseEntity> history = Sets.newHashSet();
 	
-	@Override
 	public void process(Sentence s) {
 		for (Token t : s.tokens()) {
 			WordClass wc = t.get(Features.CLASS);
@@ -46,4 +45,8 @@ public class MarkNew implements Processor {
 		}
 	}
 
+	@Override
+	public void reset() {
+		history.clear();
+	}
 }

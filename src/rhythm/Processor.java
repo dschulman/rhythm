@@ -1,5 +1,6 @@
 package rhythm;
 
-public interface Processor {
-	public void process(Sentence s);
+public abstract class Processor {
+	public abstract void process(Sentence s);
+	public void reset() {}
 }

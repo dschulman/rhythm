@@ -7,7 +7,7 @@ import opennlp.tools.chunker.ChunkerME;
 import opennlp.tools.chunker.ChunkerModel;
 import opennlp.tools.util.Span;
 
-public class PhraseChunk implements Processor {
+public class PhraseChunk extends Processor {
 	private final ChunkerME chunker;
 	
 	public PhraseChunk(Configuration conf) throws IOException {

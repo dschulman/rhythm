@@ -6,7 +6,7 @@ import java.io.InputStream;
 import opennlp.tools.postag.POSModel;
 import opennlp.tools.postag.POSTaggerME;
 
-public class Tag implements Processor {
+public class Tag extends Processor {
 	private final POSTaggerME tagger;
 	
 	public Tag(Configuration c) throws IOException {

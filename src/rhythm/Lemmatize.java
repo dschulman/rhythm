@@ -8,7 +8,7 @@ import edu.mit.jwi.IDictionary;
 import edu.mit.jwi.item.POS;
 import edu.mit.jwi.morph.WordnetStemmer;
 
-public class Lemmatize implements Processor {
+public class Lemmatize extends Processor {
 	private final IDictionary wordnet;
 	private final WordnetStemmer stemmer;
 	

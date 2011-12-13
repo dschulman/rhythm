@@ -31,6 +31,8 @@ public class RhythmConsole {
 			System.out.println("missing command!");
 		else if (parts[0].equalsIgnoreCase("output"))
 			cmdOutput(parts);
+		else if (parts[0].equalsIgnoreCase("reset"))
+			rhythm.reset();
 		else
 			System.out.println("unknown command: " + parts[0]);
 		return true;

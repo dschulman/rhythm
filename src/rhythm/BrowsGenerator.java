@@ -3,7 +3,7 @@ package rhythm;
 import static com.google.common.collect.Iterables.any;
 import static rhythm.Features.is_;
 
-public class BrowsGenerator implements Processor {
+public class BrowsGenerator extends Processor {
 	// TODO: should be an object (not just noun phrase) 
 	public void process(Sentence s) {
 		for (Interval rheme : s.get(Features.RHEMES))

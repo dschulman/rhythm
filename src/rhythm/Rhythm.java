@@ -36,4 +36,9 @@ public class Rhythm {
 	public void setOutput(Compiler output) {
 		this.output = output;
 	}
+	
+	public void reset() {
+		for (Processor p : procs)
+			p.reset();
+	}
 }

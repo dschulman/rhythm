@@ -3,7 +3,7 @@ package rhythm;
 import static com.google.common.collect.Iterables.any;
 import static rhythm.Features.is_;
 
-public class ThemeRhemeChunk implements Processor {
+public class ThemeRhemeChunk extends Processor {
 	public void process(Sentence s) {
 		Intervals themes = new Intervals();
 		Intervals rhemes = new Intervals();
