@@ -8,7 +8,7 @@ import com.google.common.collect.Iterables;
 public class Rhythm {
 	private final ToSentences toSentences;
 	private final ImmutableList<Processor> procs;
-	private final Compiler output;
+	private Compiler output;
 	
 	public Rhythm(Configuration conf) throws IOException {
 		this.toSentences = new ToSentences(conf);
@@ -31,5 +31,9 @@ public class Rhythm {
 			for (Processor p : procs)
 				p.process(s);
 		return Iterables.transform(ss, output);
+	}
+	
+	public void setOutput(Compiler output) {
+		this.output = output;
 	}
 }
