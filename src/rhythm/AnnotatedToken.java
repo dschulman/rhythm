@@ -1,16 +1,14 @@
 package rhythm;
 
-import java.util.Set;
-
 import com.google.common.base.Objects;
 
 public final class AnnotatedToken {
 	private final Token token;
-	private final Set<Behavior> starting, ending;
+	private final Iterable<Behavior> starting, ending;
 	
 	public AnnotatedToken(Token token, 
-			Set<Behavior> starting,
-			Set<Behavior> ending) {
+			Iterable<Behavior> starting,
+			Iterable<Behavior> ending) {
 		this.token = token;
 		this.starting = starting;
 		this.ending = ending;
@@ -20,11 +18,11 @@ public final class AnnotatedToken {
 		return token;
 	}
 	
-	public Set<Behavior> starting() {
+	public Iterable<Behavior> starting() {
 		return starting;
 	}
 	
-	public Set<Behavior> ending() {
+	public Iterable<Behavior> ending() {
 		return ending;
 	}
 	

@@ -1,7 +1,6 @@
 package rhythm;
 
 import java.io.StringWriter;
-import java.util.Set;
 
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -38,20 +37,22 @@ public class BeatXmlCompiler implements Compiler {
 		w.writeEndDocument();
 	}
 
-	private void writeEnding(Set<Behavior> ending, XMLStreamWriter w)
+	private void writeEnding(Iterable<Behavior> ending, XMLStreamWriter w)
 			throws XMLStreamException {
 		for (Behavior b : ending)
 			if ("brows".equals(b.type()))
 				writeEmpty(w, "EYEBROWS", a("DIR", "DOWN"));
 	}
 
-	private void writeStarting(Set<Behavior> starting, XMLStreamWriter w)
+	private void writeStarting(Iterable<Behavior> starting, XMLStreamWriter w)
 			throws XMLStreamException {
 		for (Behavior b : starting) {
 			if ("beat".equals(b.type()))
 				writeEmpty(w, "gesture", a("hand", "L"), a("cmd", "BEAT"));
 			else if ("brows".equals(b.type()))
 				writeEmpty(w, "EYEBROWS", a("DIR", "UP"));
+			else if ("headnod".equals(b.type()))
+				writeEmpty(w, "HEADNOD");
 		}
 	}
 	

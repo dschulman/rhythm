@@ -21,7 +21,8 @@ public class Rhythm {
 			new ClauseChunk(),
 			new ThemeRhemeChunk(),
 			new BeatGenerator(),
-			new BrowsGenerator());
+			new BrowsGenerator(),
+			new HeadnodGenerator());
 		this.output = new BeatXmlCompiler();
 	}
 	

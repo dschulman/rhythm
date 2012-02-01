@@ -7,7 +7,6 @@ import static rhythm.Interval.CompareLow;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import com.google.common.base.Function;
 import com.google.common.base.Objects;
@@ -16,7 +15,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.PeekingIterator;
-import com.google.common.collect.Sets;
 
 public class Sentence extends Features {
 	private final ImmutableList<Token> tokens;
@@ -88,10 +86,10 @@ public class Sentence extends Features {
 							return endOfData();
 						Token t = (n==tokens.size()) ? null : tokens.get(n);
 						n++;
-						Set<Behavior> tStarting = Sets.newTreeSet(CompareHigh);
+						List<Behavior> tStarting = Lists.newArrayList();
 						while (starting.hasNext() && starting.peek().low()<=n)
 							tStarting.add(starting.next());
-						Set<Behavior> tEnding = Sets.newTreeSet(CompareLow);
+						List<Behavior> tEnding = Lists.newArrayList();
 						while (ending.hasNext() && ending.peek().high()<=n)
 							tEnding.add(ending.next());
 						return new AnnotatedToken(t, tStarting, tEnding);
