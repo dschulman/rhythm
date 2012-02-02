@@ -20,6 +20,7 @@ public class Rhythm {
 			new PhraseChunk(conf),
 			new ClauseChunk(),
 			new ThemeRhemeChunk(),
+			new MarkTopicShift(conf),
 			new BeatGenerator(),
 			new BrowsGenerator(),
 			new HeadnodGenerator());
