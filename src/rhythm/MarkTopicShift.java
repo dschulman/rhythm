@@ -33,7 +33,7 @@ public class MarkTopicShift extends Processor {
 	private final List<Marker> markers;
 	
 	public MarkTopicShift(Configuration conf) throws IOException {
-		InputStream in = conf.openModelStream("discourse-markers", "discourse-markers");
+		InputStream in = conf.openModelStream("discourse-markers", "en-discourse-markers");
 		try {
 			// sort so that we prefer the longest markers
 			markers = CompareLength.reverse().sortedCopy(read(in));
