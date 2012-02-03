@@ -53,6 +53,8 @@ public class BeatXmlCompiler implements Compiler {
 				writeEmpty(w, "EYEBROWS", a("DIR", "UP"));
 			else if ("headnod".equals(b.type()))
 				writeEmpty(w, "HEADNOD");
+			else if ("posture".equals(b.type()))
+				writeEmpty(w, "posture");
 		}
 	}
 	

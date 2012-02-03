@@ -23,7 +23,8 @@ public class Rhythm {
 			new MarkTopicShift(conf),
 			new BeatGenerator(),
 			new BrowsGenerator(),
-			new HeadnodGenerator());
+			new HeadnodGenerator(),
+			new MonologuePostureShiftGenerator());
 		this.output = new BeatXmlCompiler();
 	}
 	

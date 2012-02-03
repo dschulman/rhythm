@@ -24,6 +24,14 @@ public class Features {
 		return (T) features.get(key);
 	}
 	
+	public <T> boolean has(Feature<T> key, T value) {
+		return Objects.equal(get(key), value);
+	}
+	
+	public boolean has(Feature<?> key) {
+		return features.containsKey(key);
+	}
+	
 	public boolean put(Feature<Void> key) {
 		boolean wasSet = features.containsKey(key);
 		features.put(key, null);
