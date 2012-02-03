@@ -1,30 +1,40 @@
 package rhythm;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
-import jline.ConsoleReader;
+import com.google.common.base.Charsets;
 
 public class RhythmConsole {
 	private final Rhythm rhythm;
-	private final ConsoleReader console = new ConsoleReader();
-	
+	private final BufferedReader reader;
+
 	public RhythmConsole(Rhythm rhythm) throws IOException {
 		this.rhythm = rhythm;
+		this.reader = new BufferedReader(
+			new InputStreamReader(System.in, Charsets.UTF_8));
 	}
-	
+
 	public void run() throws IOException {
 		String input;
-		while ((input = console.readLine("> ")) != null)
-			if ( ! processAsCommand(input))
+		while ((input = readLine()) != null)
+			if (!processAsCommand(input))
 				for (String output : rhythm.process(input))
 					System.out.println(output);
+	}
+
+	private String readLine() throws IOException {
+		System.out.print("> ");
+		System.out.flush();
+		return reader.readLine();
 	}
 	
 	private boolean processAsCommand(String input) {
 		input = input.trim();
-		if (! input.startsWith(":"))
+		if (!input.startsWith(":"))
 			return false;
-		
+
 		input = input.substring(1).trim();
 		String[] parts = input.split("\\s+");
 		if (parts.length == 0)
@@ -37,7 +47,7 @@ public class RhythmConsole {
 			System.out.println("unknown command: " + parts[0]);
 		return true;
 	}
-	
+
 	private void cmdOutput(String[] args) {
 		if (args.length != 2)
 			System.out.println("Usage: output (beat|string)");
@@ -48,7 +58,7 @@ public class RhythmConsole {
 		else
 			System.out.println("Unknown output type: " + args[1]);
 	}
-	
+
 	public static void main(String[] args) throws IOException {
 		Rhythm r = new Rhythm(new Configuration(args));
 		RhythmConsole rc = new RhythmConsole(r);
