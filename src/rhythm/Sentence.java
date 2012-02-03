@@ -85,13 +85,13 @@ public class Sentence extends Features {
 						if (n > tokens.size())
 							return endOfData();
 						Token t = (n==tokens.size()) ? null : tokens.get(n);
-						n++;
 						List<Behavior> tStarting = Lists.newArrayList();
 						while (starting.hasNext() && starting.peek().low()<=n)
 							tStarting.add(starting.next());
 						List<Behavior> tEnding = Lists.newArrayList();
 						while (ending.hasNext() && ending.peek().high()<=n)
 							tEnding.add(ending.next());
+						n++;
 						return new AnnotatedToken(t, tStarting, tEnding);
 					}
 				};
