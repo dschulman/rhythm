@@ -36,6 +36,11 @@ public class ToSentences {
 		List<Sentence> ss = Lists.newArrayListWithCapacity(rawSs.length);
 		for (String raw : rawSs)
 			ss.add(new Sentence(tokenizer.tokenize(raw)));
+		if (!ss.isEmpty()) {
+			// TODO one input may not be one turn; allow user annotations
+			ss.get(0).put(Features.TURN_START);
+			ss.get(ss.size()-1).put(Features.TURN_END);
+		}
 		return ss;
 	}
 }

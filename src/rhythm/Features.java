@@ -72,4 +72,7 @@ public class Features {
 	public static final Feature<Intervals> CLAUSES = Feature.named("CLAUSES");
 	public static final Feature<Intervals> THEMES = Feature.named("THEMES");
 	public static final Feature<Intervals> RHEMES = Feature.named("RHEMES");
+	
+	public static final Feature<Void> TURN_START = Feature.named("TURN_START");
+	public static final Feature<Void> TURN_END = Feature.named("TURN_END");
 }
