@@ -1,15 +1,16 @@
 package rhythm;
 
 import static com.google.common.collect.Iterables.any;
-import static rhythm.Features.is_;
+import static rhythm.Features.*;
+import static rhythm.Information.Rheme;
 
 public class BrowsGenerator extends Processor {
-	// TODO: should be an object (not just noun phrase) 
 	public void process(Sentence s) {
-		for (Interval rheme : s.get(Features.RHEMES))
-			for (Interval p : s.get(Features.PHRASES).in(rheme))
-				if (p.get(Features.PHRASE_TYPE)==PhraseType.NounPhrase)
-					if (any(s.tokensIn(p), is_(Features.NEW)))
-						s.add(new Behavior("brows", p.low(), p.high()));
+		for (Interval info : s.get(INFORMATION_STRUCTURE))
+			if (info.has(INFORMATION, Rheme))
+				for (Interval p : s.get(Features.PHRASES).in(info))
+					if (p.get(Features.PHRASE_TYPE)==PhraseType.NounPhrase)
+						if (any(s.tokensIn(p), is_(NEW)))
+							s.add(new Behavior("brows", p.low(), p.high()));
 	}
 }

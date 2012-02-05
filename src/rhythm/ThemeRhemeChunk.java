@@ -2,18 +2,17 @@ package rhythm;
 
 import static com.google.common.collect.Iterables.any;
 import static rhythm.Features.is_;
+import static rhythm.Information.*;
 
 public class ThemeRhemeChunk extends Processor {
 	public void process(Sentence s) {
-		Intervals themes = new Intervals();
-		Intervals rhemes = new Intervals();
+		Intervals infoStruct = new Intervals();
 		for (Interval clause : s.get(Features.CLAUSES))
-			split(s, clause, themes, rhemes);
-		s.put(Features.THEMES, themes);
-		s.put(Features.RHEMES, rhemes);
+			split(s, clause, infoStruct);
+		s.put(Features.INFORMATION_STRUCTURE, infoStruct);
 	}
 
-	private void split(Sentence s, Interval clause, Intervals themes, Intervals rhemes) {
+	private void split(Sentence s, Interval clause, Intervals out) {
 		Interval pre = null, verb = null, post = null;
 		for (Interval phrase : s.get(Features.PHRASES).in(clause)) {
 			if (verb==null) {
@@ -31,28 +30,28 @@ public class ThemeRhemeChunk extends Processor {
 		
 		// heuristics from Hiyakumoto, Prevost and Cassell
 		if (!preFocus && !verbFocus && !postFocus) { // case 1
-			maybeAdd(themes, pre); maybeAdd(rhemes, verb, post);
+			maybeAdd(out, Theme, pre); maybeAdd(out, Rheme, verb, post);
 		}
 		else if (preFocus && verbFocus && !postFocus) { // case 2
-			maybeAdd(themes, pre); maybeAdd(rhemes, verb, post);
+			maybeAdd(out, Theme, pre); maybeAdd(out, Rheme, verb, post);
 		}
 		else if (preFocus && !verbFocus && postFocus) { // case 3
-			maybeAdd(themes, pre, verb); maybeAdd(rhemes, post);
+			maybeAdd(out, Theme, pre, verb); maybeAdd(out, Rheme, post);
 		}
 		else if (!preFocus && verbFocus && postFocus) { // case 4
-			maybeAdd(themes, pre, verb); maybeAdd(rhemes, post);
+			maybeAdd(out, Theme, pre, verb); maybeAdd(out, Rheme, post);
 		}
 		else if (preFocus && verbFocus && postFocus) { // case 5
-			maybeAdd(themes, pre, verb); maybeAdd(rhemes, post);
+			maybeAdd(out, Theme, pre, verb); maybeAdd(out, Rheme, post);
 		}
 		else if (preFocus && !verbFocus && !postFocus) { // case 6
-			maybeAdd(rhemes, pre); maybeAdd(themes, verb, post);
+			maybeAdd(out, Rheme, pre); maybeAdd(out, Theme, verb, post);
 		}
 		else if (!preFocus && verbFocus && !postFocus) { // case 7
-			maybeAdd(themes, pre); maybeAdd(rhemes, verb, post);
+			maybeAdd(out, Theme, pre); maybeAdd(out, Rheme, verb, post);
 		}
 		else if (!preFocus && !verbFocus && postFocus) { // case 8
-			maybeAdd(themes, pre, verb); maybeAdd(rhemes, post);
+			maybeAdd(out, Theme, pre, verb); maybeAdd(out, Rheme, post);
 		}
 	}
 	
@@ -71,13 +70,15 @@ public class ThemeRhemeChunk extends Processor {
 		return (i != null) && any(s.tokensIn(i), is_(Features.NEW));
 	}
 	
-	private void maybeAdd(Intervals ints, Interval i) {
-		if (i != null)
-			ints.add(i);
+	private void maybeAdd(Intervals out, Information info, Interval i) {
+		if (i != null) {
+			i.put(Features.INFORMATION, info);
+			out.add(i);
+		}
 	}
 	
-	private void maybeAdd(Intervals ints, Interval i1, Interval i2) {
+	private void maybeAdd(Intervals out, Information info, Interval i1, Interval i2) {
 		if ((i1!=null) || (i2!=null))
-			ints.add(expand(i1, i2));
+			maybeAdd(out, info, expand(i1, i2));
 	}
 }

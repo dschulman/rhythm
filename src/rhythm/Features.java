@@ -65,13 +65,13 @@ public class Features {
 	public static final Feature<WordNumber> NUMBER = Feature.named("NUMBER");
 	public static final Feature<WordPerson> PERSON = Feature.named("PERSON");
 	public static final Feature<PhraseType> PHRASE_TYPE = Feature.named("PHRASE_TYPE");
+	public static final Feature<Information> INFORMATION = Feature.named("INFORMATION");
 	public static final Feature<Void> NEW = Feature.named("NEW");
 	public static final Feature<TopicShiftType> TOPIC_SHIFT = Feature.named("TOPIC_SHIFT");
 	
 	public static final Feature<Intervals> PHRASES = Feature.named("PHRASES");
 	public static final Feature<Intervals> CLAUSES = Feature.named("CLAUSES");
-	public static final Feature<Intervals> THEMES = Feature.named("THEMES");
-	public static final Feature<Intervals> RHEMES = Feature.named("RHEMES");
+	public static final Feature<Intervals> INFORMATION_STRUCTURE = Feature.named("INFORMATION_STRUCTURE");
 	
 	public static final Feature<Void> TURN_START = Feature.named("TURN_START");
 	public static final Feature<Void> TURN_END = Feature.named("TURN_END");
