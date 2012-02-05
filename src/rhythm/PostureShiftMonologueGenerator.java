@@ -1,6 +1,6 @@
 package rhythm;
 
-public class PostureShiftGenerator extends Processor {
+public class PostureShiftMonologueGenerator extends Processor {
 	public static enum Param {
 		OnTopicP, OffTopicP;
 	};
@@ -19,9 +19,12 @@ public class PostureShiftGenerator extends Processor {
 	};
 	
 	private final Model<Param> m;
-	
-	public PostureShiftGenerator(Model<Param> m) {
+	public PostureShiftMonologueGenerator(Model<Param> m) {
 		this.m = m;
+	}
+
+	public PostureShiftMonologueGenerator() {
+		this(Cassell2001);
 	}
 	
 	public void process(Sentence s) {

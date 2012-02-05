@@ -55,6 +55,14 @@ public class Features {
 		};
 	}
 	
+	public static <T> Predicate<Features> has_(final Feature<?> key) {
+		return new Predicate<Features>() {
+			public boolean apply(Features input) {
+				return input.has(key);
+			}
+		};
+	}
+	
 	public static <T> Predicate<Features> is_(Feature<Void> key) {
 		return has_(key, null);
 	}
