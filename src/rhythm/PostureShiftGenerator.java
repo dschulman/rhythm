@@ -1,26 +1,27 @@
 package rhythm;
 
 public class PostureShiftGenerator extends Processor {
-	public interface Model {
-		double onTopicShiftP();
-		double offTopicShiftP();
-	}
-	
-	public static final Model Cassell2001Monologue = new Model() {
-		public double onTopicShiftP() { return 0.84; }
-		public double offTopicShiftP() { return 0.16; }
+	public static enum Param {
+		OnTopicP, OffTopicP;
+	};
+
+	public static final Model<Param> Cassell2001 = new Model<Param>() {
+		public double value(Sentence s, Param param) {
+			switch (param) {
+			case OnTopicP:
+				return 0.84;
+			case OffTopicP:
+				return 0.16;
+			default:
+				return 0;
+			}
+		}
 	};
 	
-	// TODO should vary by whether the sentence starts/ends the turn
-	public static final Model Cassell2001Dialogue = new Model() {
-		public double onTopicShiftP() { return 0.54; }
-		public double offTopicShiftP() { return 0.21; }
-	};
+	private final Model<Param> m;
 	
-	private final Model model;
-	
-	public PostureShiftGenerator(Model model) {
-		this.model = model;
+	public PostureShiftGenerator(Model<Param> m) {
+		this.m = m;
 	}
 	
 	public void process(Sentence s) {
@@ -32,7 +33,7 @@ public class PostureShiftGenerator extends Processor {
 		boolean anyShifts = false;
 		for (Interval clause : s.get(Features.CLAUSES))
 			if (clause.has(Features.TOPIC_SHIFT))
-				if (Math.random() < model.onTopicShiftP()) {
+				if (Math.random() < m.value(s, Param.OnTopicP)) {
 					s.add(new Behavior("posture", clause.low(), clause.low()+1));
 					anyShifts = true;
 				}
@@ -41,7 +42,7 @@ public class PostureShiftGenerator extends Processor {
 
 	public void generateOffTopicShift(Sentence s) {
 		for (Interval clause : s.get(Features.CLAUSES))
-			if (Math.random() < model.offTopicShiftP())
+			if (Math.random() < m.value(s, Param.OffTopicP))
 				s.add(new Behavior("posture", clause.low(), clause.low()+1));
 	}
 }

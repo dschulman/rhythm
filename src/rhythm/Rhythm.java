@@ -1,6 +1,6 @@
 package rhythm;
 
-import static rhythm.PostureShiftGenerator.Cassell2001Monologue;
+import static rhythm.PostureShiftGenerator.Cassell2001;
 
 import java.io.IOException;
 
@@ -26,7 +26,7 @@ public class Rhythm {
 			new BeatGenerator(),
 			new BrowsGenerator(),
 			new HeadnodGenerator(),
-			new PostureShiftGenerator(Cassell2001Monologue),
+			new PostureShiftGenerator(Cassell2001),
 			new GazeGenerator());
 		this.output = new BeatXmlCompiler();
 	}
