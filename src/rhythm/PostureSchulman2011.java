@@ -54,8 +54,8 @@ public class PostureSchulman2011<P extends Enum<P>> implements Model<P> {
 	double logit(double p) { return Math.log(p/(1-p)); }
 	double invLogit(double q) { return 1/(1+Math.exp(-q)); }
 	
-	public static final Model<PostureShiftMonologueGenerator.Param> Monologue =
-		adjust(PostureShiftMonologueGenerator.Cassell2001);
-	public static final Model<PostureShiftDialogueGenerator.Param> Dialogue =
-		adjust(PostureShiftDialogueGenerator.Cassell2001);
+	public static final Model<PostureMonologueGenerator.Param> Monologue =
+		adjust(PostureMonologueGenerator.Cassell2001);
+	public static final Model<PostureDialogueGenerator.Param> Dialogue =
+		adjust(PostureDialogueGenerator.Cassell2001);
 }

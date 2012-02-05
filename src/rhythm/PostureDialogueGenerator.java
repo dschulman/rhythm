@@ -3,7 +3,7 @@ package rhythm;
 import static com.google.common.collect.Iterables.any;
 import static rhythm.Features.*;
 
-public class PostureShiftDialogueGenerator extends Processor {
+public class PostureDialogueGenerator extends Processor {
 	public static enum Param {
 		Start_ChangeTopic_NewTurn,
 		Start_ChangeTopic_KeepTurn,
@@ -31,11 +31,11 @@ public class PostureShiftDialogueGenerator extends Processor {
 	};
 	
 	private final Model<Param> m;
-	public PostureShiftDialogueGenerator(Model<Param> m) {
+	public PostureDialogueGenerator(Model<Param> m) {
 		this.m = m;
 	}
 	
-	public PostureShiftDialogueGenerator() {
+	public PostureDialogueGenerator() {
 		this(Cassell2001);
 	}
 	
