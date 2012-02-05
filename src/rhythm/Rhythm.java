@@ -15,6 +15,7 @@ public class Rhythm {
 	public Rhythm(Configuration conf) throws IOException {
 		this.toSentences = new ToSentences(conf);
 		this.procs = ImmutableList.<Processor>of(
+			new InferContext(),
 			new Tag(conf),
 			new TagFeatureExtract(),
 			new Lemmatize(conf),

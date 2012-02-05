@@ -24,6 +24,10 @@ public class Features {
 		return (T) features.get(key);
 	}
 	
+	public <T> T get(Feature<T> key, T defaultValue) {
+		return has(key) ? get(key) : defaultValue;
+	}
+	
 	public <T> boolean has(Feature<T> key, T value) {
 		return Objects.equal(get(key), value);
 	}
@@ -85,4 +89,8 @@ public class Features {
 	public static final Feature<Void> TURN_END = Feature.named("TURN_END");
 	
 	public static final Feature<String> DIRECTION = Feature.named("DIRECTION");
+	
+	public static final Feature<Integer> SESSION_INDEX = Feature.named("SESSION_INDEX");
+	public static final Feature<Integer> OFFSET = Feature.named("OFFSET");
+	public static final Feature<Double> TIME_OFFSET = Feature.named("TIME_OFFSET");
 }
