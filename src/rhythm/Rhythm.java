@@ -26,7 +26,8 @@ public class Rhythm {
 			new BeatGenerator(),
 			new BrowsGenerator(),
 			new HeadnodGenerator(),
-			new PostureShiftGenerator(Cassell2001Monologue));
+			new PostureShiftGenerator(Cassell2001Monologue),
+			new GazeGenerator());
 		this.output = new BeatXmlCompiler();
 	}
 	

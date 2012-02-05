@@ -75,4 +75,6 @@ public class Features {
 	
 	public static final Feature<Void> TURN_START = Feature.named("TURN_START");
 	public static final Feature<Void> TURN_END = Feature.named("TURN_END");
+	
+	public static final Feature<String> DIRECTION = Feature.named("DIRECTION");
 }

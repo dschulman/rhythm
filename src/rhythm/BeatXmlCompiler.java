@@ -55,6 +55,11 @@ public class BeatXmlCompiler implements Compiler {
 				writeEmpty(w, "HEADNOD");
 			else if ("posture".equals(b.type()))
 				writeEmpty(w, "posture");
+			else if ("gaze".equals(b.type()) && b.has(Features.DIRECTION, "AWAY")) {
+				writeEmpty(w, "gaze", a("dir", "AWAY"));
+				writeEmpty(w, "delay", a("ms", "200")); //TODO configurable delay
+				writeEmpty(w, "gaze", a("dir", "TOWARDS"));
+			}
 		}
 	}
 	
