@@ -1,61 +1,35 @@
 package rhythm;
 
-public class PostureSchulman2011<P extends Enum<P>> implements Model<P> {
-	public static enum Param {
-		Session, Minutes, Session_Minutes;
-	}
-	
-	public static final Model<Param> Default = new Model<Param> () {
-		public double value(Sentence s, Param param) {
-			switch(param) {
-			case Session: return 0.16;
-			case Minutes: return -0.03;
-			case Session_Minutes: return -0.02;
-			default: return 0;
-			}
+public class PostureSchulman2011 {
+	public static class Monologue extends PostureMonologueGenerator {
+		@Override
+		protected double shift(Sentence s, boolean onTopicShift) {
+			return adjust(s, super.shift(s, onTopicShift));
 		}
-	};
-	
-	private final Model<P> base;
-	private final Model<Param> adjust;
-	
-	public PostureSchulman2011(Model<P> base, Model<Param> adjust) {
-		this.base = base;
-		this.adjust = adjust;
 	}
 	
-	public static <P extends Enum<P>> PostureSchulman2011<P> adjust(Model<P> base) {
-		return new PostureSchulman2011<P> (base, Default);
+	public static class Dialogue extends PostureDialogueGenerator {
+		@Override
+		protected double shiftAtStart(Sentence s, boolean newTopic, boolean newTurn) {
+			return adjust(s, super.shiftAtStart(s, newTopic, newTurn));
+		}
+
+		@Override
+		protected double shiftAtEnd(Sentence s, boolean newTopic, boolean newTurn) {
+			return adjust(s, super.shiftAtEnd(s, newTopic, newTurn));
+		}
 	}
 	
-	public static <P extends Enum<P>> PostureSchulman2011<P> adjust(Model<P> base, Model<Param> adjust) {
-		return new PostureSchulman2011<P> (base, adjust);
-	}
-	
-	public PostureSchulman2011(Model<P> base) {
-		this(base, Default);
-	}
-	
-	public double value(Sentence s, P param) {
-		double p = base.value(s, param);
+	private static double adjust(Sentence s, double p) {
 		if ((p > 0) && (p < 1)) {
 			int sessions = s.get(Features.SESSION_INDEX, 0);
 			double minutes = s.get(Features.TIME_OFFSET, 0.0)/60;
-			p = invLogit(
-				logit(p) +
-				adjust.value(s, Param.Session)*sessions +
-				adjust.value(s, Param.Minutes)*minutes + 
-				adjust.value(s, Param.Session_Minutes)*sessions*minutes);
+			p = invLogit(logit(p) + 0.16*sessions - 0.03*minutes - 0.02*sessions*minutes);
 		}
 		return p;
 	}
 
 	// TODO these probably belong in a math utils
-	double logit(double p) { return Math.log(p/(1-p)); }
-	double invLogit(double q) { return 1/(1+Math.exp(-q)); }
-	
-	public static final Model<PostureMonologueGenerator.Param> Monologue =
-		adjust(PostureMonologueGenerator.Cassell2001);
-	public static final Model<PostureDialogueGenerator.Param> Dialogue =
-		adjust(PostureDialogueGenerator.Cassell2001);
+	public static double logit(double p) { return Math.log(p/(1-p)); }
+	public static double invLogit(double q) { return 1/(1+Math.exp(-q)); }
 }
