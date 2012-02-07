@@ -22,11 +22,15 @@ public class MarkTopicShift extends Processor {
 			this.type = type;
 			this.words = ImmutableList.copyOf(words);
 		}
+		
+		public int length() {
+			return words.size();
+		}
 	}
 	
 	private static final Ordering<Marker> CompareLength = new Ordering<Marker>() {
 		public int compare(Marker lhs, Marker rhs) {
-			return Ints.compare(lhs.words.size(), rhs.words.size());
+			return Ints.compare(lhs.length(), rhs.length());
 		}
 	};
 	
@@ -66,10 +70,15 @@ public class MarkTopicShift extends Processor {
 	public void process(Sentence s) {
 		// we assume markers occur only at the beginning of clauses
 		// TODO is this heuristic language-specific?
+		Intervals markerInts = new Intervals();
 		for (Interval clause : s.get(Features.CLAUSES))
 			for (Marker m : markers)
-				if (testMarker(s, clause, m))
+				if (testMarker(s, clause, m)) {
+					clause.put(Features.TOPIC_SHIFT, m.type);
+					markerInts.add(clause.low(), clause.low()+m.length());
 					break;
+				}
+		s.put(Features.DISCOURSE_MARKERS, markerInts);
 	}
 
 	private boolean testMarker(Sentence s, Interval clause, Marker m) {
@@ -77,10 +86,8 @@ public class MarkTopicShift extends Processor {
 		for (Token t : s.tokensIn(clause)) {
 			if (!t.text().equalsIgnoreCase(mit.next()))
 				break;
-			if (!mit.hasNext()) {
-				clause.put(Features.TOPIC_SHIFT, m.type);
+			if (!mit.hasNext())
 				return true;
-			}
 		}
 		return false;
 	}

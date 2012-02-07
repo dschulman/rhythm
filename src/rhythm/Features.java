@@ -84,6 +84,7 @@ public class Features {
 	public static final Feature<Intervals> PHRASES = Feature.named("PHRASES");
 	public static final Feature<Intervals> CLAUSES = Feature.named("CLAUSES");
 	public static final Feature<Intervals> INFORMATION_STRUCTURE = Feature.named("INFORMATION_STRUCTURE");
+	public static final Feature<Intervals> DISCOURSE_MARKERS = Feature.named("DISCOURSE_MARKERS");
 	
 	public static final Feature<Void> TURN_START = Feature.named("TURN_START");
 	public static final Feature<Void> TURN_END = Feature.named("TURN_END");
@@ -91,6 +92,7 @@ public class Features {
 	public static final Feature<String> DIRECTION = Feature.named("DIRECTION");
 	public static final Feature<String> ACCENT = Feature.named("ACCENT");
 	public static final Feature<String> ENDTONE = Feature.named("ENDTONE");
+	public static final Feature<Long> RATE = Feature.named("RATE");
 	
 	public static final Feature<Integer> SESSION_INDEX = Feature.named("SESSION_INDEX");
 	public static final Feature<Integer> OFFSET = Feature.named("OFFSET");
