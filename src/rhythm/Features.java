@@ -89,6 +89,8 @@ public class Features {
 	public static final Feature<Void> TURN_END = Feature.named("TURN_END");
 	
 	public static final Feature<String> DIRECTION = Feature.named("DIRECTION");
+	public static final Feature<String> ACCENT = Feature.named("ACCENT");
+	public static final Feature<String> ENDTONE = Feature.named("ENDTONE");
 	
 	public static final Feature<Integer> SESSION_INDEX = Feature.named("SESSION_INDEX");
 	public static final Feature<Integer> OFFSET = Feature.named("OFFSET");

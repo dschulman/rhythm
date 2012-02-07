@@ -22,6 +22,7 @@ public class Rhythm {
 			new ClauseChunk(),
 			new ThemeRhemeChunk(),
 			new MarkTopicShift(conf),
+			new IntonationGenerator(),
 			new BeatGenerator(),
 			new BrowsGenerator(),
 			new HeadnodGenerator(),
