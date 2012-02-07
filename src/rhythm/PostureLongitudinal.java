@@ -1,6 +1,6 @@
 package rhythm;
 
-public class PostureSchulman2011 {
+public class PostureLongitudinal {
 	public static class Monologue extends PostureMonologueGenerator {
 		@Override
 		protected double shift(Sentence s, boolean onTopicShift) {
