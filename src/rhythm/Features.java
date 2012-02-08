@@ -95,6 +95,7 @@ public class Features {
 	public static final Feature<Long> RATE = Feature.named("RATE");
 	
 	public static final Feature<Integer> SESSION_INDEX = Feature.named("SESSION_INDEX");
+	public static final Feature<Void> LAST_SESSION = Feature.named("LAST_SESSION");
 	public static final Feature<Integer> OFFSET = Feature.named("OFFSET");
 	public static final Feature<Double> TIME_OFFSET = Feature.named("TIME_OFFSET");
 }
