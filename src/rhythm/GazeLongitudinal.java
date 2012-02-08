@@ -5,18 +5,18 @@ import static java.lang.Math.pow;
 
 public class GazeLongitudinal extends GazeGenerator {
 	@Override
-	protected double themeStartAway(Sentence s) {
-		return 1 - adjust(s, 1 - super.themeStartAway(s));
+	protected double themeStartAway(Context c, Sentence s) {
+		return 1 - adjust(c, 1 - super.themeStartAway(c, s));
 	}
 
 	@Override
-	protected double rhemeEndTowards(Sentence s) {
-		return adjust(s, super.rhemeEndTowards(s));
+	protected double rhemeEndTowards(Context c, Sentence s) {
+		return adjust(c, super.rhemeEndTowards(c, s));
 	}
 	
-	private double adjust(Sentence s, double p0) {
-		int sessions = s.get(Features.SESSION_INDEX, 0);
-		boolean last = s.is(Features.LAST_SESSION);
+	private double adjust(Context c, double p0) {
+		int sessions = c.get(Features.SESSION_INDEX, 0);
+		boolean last = c.is(Features.LAST_SESSION);
 		double adjust = 0.2*sessions - (last ? 0.8 : 0);
 		
 		// Where did this come from?

@@ -1,7 +1,7 @@
 package rhythm;
 
-public class TagFeatureExtract extends Processor {
-	public void process(Sentence s) {
+public class TagFeatureExtract implements Processor {
+	public void process(Context c, Sentence s) {
 		for (Token t : s.tokens()) {
 			String tag = t.get(Features.TAG);
 			t.maybePut(Features.CLASS, asWordClass(tag));

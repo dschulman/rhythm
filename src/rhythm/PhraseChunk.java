@@ -7,7 +7,7 @@ import opennlp.tools.chunker.ChunkerME;
 import opennlp.tools.chunker.ChunkerModel;
 import opennlp.tools.util.Span;
 
-public class PhraseChunk extends Processor {
+public class PhraseChunk implements Processor {
 	private final ChunkerME chunker;
 	
 	public PhraseChunk(Configuration conf) throws IOException {
@@ -19,7 +19,7 @@ public class PhraseChunk extends Processor {
 		}
 	}
 	
-	public void process(Sentence s) {
+	public void process(Context c, Sentence s) {
 		String[] text = s.tokensTextArray();
 		String[] tags = s.tokensArray(Features.TAG, String.class);
 		Intervals phrases = new Intervals();

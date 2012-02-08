@@ -6,7 +6,7 @@ import java.io.InputStream;
 import opennlp.tools.postag.POSModel;
 import opennlp.tools.postag.POSTaggerME;
 
-public class Tag extends Processor {
+public class Tag implements Processor {
 	private final POSTaggerME tagger;
 	
 	public Tag(Configuration c) throws IOException {
@@ -18,8 +18,7 @@ public class Tag extends Processor {
 		}
 	}
 	
-	@Override
-	public void process(Sentence s) {
+	public void process(Context c, Sentence s) {
 		String[] tags = tagger.tag(s.tokensTextArray());
 		int n = 0;
 		for (Token t : s.tokens())

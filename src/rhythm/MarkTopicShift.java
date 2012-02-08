@@ -13,7 +13,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 import com.google.common.primitives.Ints;
 
-public class MarkTopicShift extends Processor {
+public class MarkTopicShift implements Processor {
 	private static final class Marker {
 		public final TopicShiftType type;
 		public final ImmutableList<String> words;
@@ -67,7 +67,7 @@ public class MarkTopicShift extends Processor {
 		return markers;
 	}
 
-	public void process(Sentence s) {
+	public void process(Context c, Sentence s) {
 		// we assume markers occur only at the beginning of clauses
 		// TODO is this heuristic language-specific?
 		Intervals markerInts = new Intervals();

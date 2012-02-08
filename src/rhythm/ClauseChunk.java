@@ -3,8 +3,8 @@ package rhythm;
 import static com.google.common.collect.Iterables.any;
 import static rhythm.Features.has_;
 
-public class ClauseChunk extends Processor {
-	public void process(Sentence s) {
+public class ClauseChunk implements Processor {
+	public void process(Context c, Sentence s) {
 		Intervals clauses = new Intervals();
 		int low = Integer.MAX_VALUE;
 		int high = Integer.MIN_VALUE;

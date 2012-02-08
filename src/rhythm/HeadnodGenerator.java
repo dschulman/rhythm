@@ -4,8 +4,8 @@ import static rhythm.Features.INFORMATION;
 import static rhythm.Features.INFORMATION_STRUCTURE;
 import static rhythm.Information.Rheme;
 
-public class HeadnodGenerator extends Processor {
-	public void process(Sentence s) {
+public class HeadnodGenerator implements Processor {
+	public void process(Context c, Sentence s) {
 		// headnod to mark new words in a rheme
 		for (Interval info : s.get(INFORMATION_STRUCTURE))
 			if (info.has(INFORMATION, Rheme))

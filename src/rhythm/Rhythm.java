@@ -13,7 +13,6 @@ public class Rhythm {
 	public Rhythm(Configuration conf) throws IOException {
 		this.toSentences = new ToSentences(conf);
 		this.procs = ImmutableList.<Processor>of(
-			new InferContext(),
 			new Tag(conf),
 			new TagFeatureExtract(),
 			new Lemmatize(conf),
@@ -27,24 +26,20 @@ public class Rhythm {
 			new BrowsGenerator(),
 			new HeadnodGenerator(),
 			new PostureMonologueGenerator(),
-			new GazeGenerator());
+			new GazeGenerator(),
+			new UpdateContext());
 		this.output = new BeatXmlCompiler();
 	}
 	
-	public Iterable<String> process(String input) {
+	public Iterable<String> process(Context c, String input) {
 		Iterable<Sentence> ss = toSentences.process(input);
 		for (Sentence s : ss)
 			for (Processor p : procs)
-				p.process(s);
+				p.process(c, s);
 		return Iterables.transform(ss, output);
 	}
 	
 	public void setOutput(Compiler output) {
 		this.output = output;
-	}
-	
-	public void reset() {
-		for (Processor p : procs)
-			p.reset();
 	}
 }

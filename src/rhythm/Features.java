@@ -46,6 +46,10 @@ public class Features {
 		return features.containsKey(key);
 	}
 	
+	public void clearAllFeatures() {
+		features.clear();
+	}
+	
 	@Override
 	public String toString() {
 		return features.toString();

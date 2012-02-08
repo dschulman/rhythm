@@ -8,10 +8,12 @@ import com.google.common.base.Charsets;
 
 public class RhythmConsole {
 	private final Rhythm rhythm;
+	private final Context context;
 	private final BufferedReader reader;
 
 	public RhythmConsole(Rhythm rhythm) throws IOException {
 		this.rhythm = rhythm;
+		this.context = new Context();
 		this.reader = new BufferedReader(
 			new InputStreamReader(System.in, Charsets.UTF_8));
 	}
@@ -20,7 +22,7 @@ public class RhythmConsole {
 		String input;
 		while ((input = readLine()) != null)
 			if (!processAsCommand(input))
-				for (String output : rhythm.process(input))
+				for (String output : rhythm.process(context, input))
 					System.out.println(output);
 	}
 
@@ -42,7 +44,7 @@ public class RhythmConsole {
 		else if (parts[0].equalsIgnoreCase("output"))
 			cmdOutput(parts);
 		else if (parts[0].equalsIgnoreCase("reset"))
-			rhythm.reset();
+			context.reset();
 		else
 			System.out.println("unknown command: " + parts[0]);
 		return true;

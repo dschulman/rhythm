@@ -4,8 +4,8 @@ import static com.google.common.collect.Iterables.any;
 import static rhythm.Features.*;
 import static rhythm.Information.Rheme;
 
-public class BrowsGenerator extends Processor {
-	public void process(Sentence s) {
+public class BrowsGenerator implements Processor {
+	public void process(Context c, Sentence s) {
 		for (Interval info : s.get(INFORMATION_STRUCTURE))
 			if (info.has(INFORMATION, Rheme))
 				for (Interval p : s.get(Features.PHRASES).in(info))

@@ -4,8 +4,8 @@ import static com.google.common.collect.Iterables.any;
 import static rhythm.Features.is_;
 import static rhythm.Information.*;
 
-public class ThemeRhemeChunk extends Processor {
-	public void process(Sentence s) {
+public class ThemeRhemeChunk implements Processor {
+	public void process(Context c, Sentence s) {
 		Intervals infoStruct = new Intervals();
 		for (Interval clause : s.get(Features.CLAUSES))
 			split(s, clause, infoStruct);

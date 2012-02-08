@@ -1,8 +1,8 @@
 package rhythm;
 
-public class IntonationGenerator extends Processor {
+public class IntonationGenerator implements Processor {
 	// TODO this is English-specific?; need a way to indicate that?
-	public void process(Sentence s) {
+	public void process(Context c, Sentence s) {
 		for (Interval i : s.get(Features.INFORMATION_STRUCTURE)) {
 			boolean theme = i.has(Features.INFORMATION, Information.Theme);
 			for (Token t : s.tokensIn(i))

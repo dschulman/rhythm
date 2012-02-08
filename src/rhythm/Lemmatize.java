@@ -8,7 +8,7 @@ import edu.mit.jwi.IDictionary;
 import edu.mit.jwi.item.POS;
 import edu.mit.jwi.morph.WordnetStemmer;
 
-public class Lemmatize extends Processor {
+public class Lemmatize implements Processor {
 	private final IDictionary wordnet;
 	private final WordnetStemmer stemmer;
 	
@@ -19,7 +19,7 @@ public class Lemmatize extends Processor {
 		stemmer = new WordnetStemmer(wordnet); 
 	}
 	
-	public void process(Sentence s) {
+	public void process(Context c, Sentence s) {
 		for (Token t : s.tokens()) {
 			List<String> lemmas = stemmer.findStems(t.text(), getPos(t));
 			if (!lemmas.isEmpty())

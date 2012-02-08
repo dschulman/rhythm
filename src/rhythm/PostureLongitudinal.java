@@ -3,27 +3,27 @@ package rhythm;
 public class PostureLongitudinal {
 	public static class Monologue extends PostureMonologueGenerator {
 		@Override
-		protected double shift(Sentence s, boolean onTopicShift) {
-			return adjust(s, super.shift(s, onTopicShift));
+		protected double shift(Context c, Sentence s, boolean onTopicShift) {
+			return adjust(c, super.shift(c, s, onTopicShift));
 		}
 	}
 	
 	public static class Dialogue extends PostureDialogueGenerator {
 		@Override
-		protected double shiftAtStart(Sentence s, boolean newTopic, boolean newTurn) {
-			return adjust(s, super.shiftAtStart(s, newTopic, newTurn));
+		protected double shiftAtStart(Context c, Sentence s, boolean newTopic, boolean newTurn) {
+			return adjust(c, super.shiftAtStart(c, s, newTopic, newTurn));
 		}
 
 		@Override
-		protected double shiftAtEnd(Sentence s, boolean newTopic, boolean newTurn) {
-			return adjust(s, super.shiftAtEnd(s, newTopic, newTurn));
+		protected double shiftAtEnd(Context c, Sentence s, boolean newTopic, boolean newTurn) {
+			return adjust(c, super.shiftAtEnd(c, s, newTopic, newTurn));
 		}
 	}
 	
-	private static double adjust(Sentence s, double p) {
+	private static double adjust(Context c, double p) {
 		if ((p > 0) && (p < 1)) {
-			int sessions = s.get(Features.SESSION_INDEX, 0);
-			double minutes = s.get(Features.TIME_OFFSET, 0.0)/60;
+			int sessions = c.get(Features.SESSION_INDEX, 0);
+			double minutes = c.get(Features.TIME_OFFSET, 0.0)/60;
 			p = invLogit(logit(p) + 0.16*sessions - 0.03*minutes - 0.02*sessions*minutes);
 		}
 		return p;
