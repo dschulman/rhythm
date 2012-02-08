@@ -28,6 +28,11 @@ public class Context extends Features {
 		public int hashCode() {
 			return Objects.hashCode(lemma, number);
 		}
+
+		@Override
+		public String toString() {
+			return number==null ? lemma : lemma + "("+number+")";
+		}
 	}
 	
 	private final Set<DiscourseEntity> history = Sets.newHashSet();
@@ -39,5 +44,13 @@ public class Context extends Features {
 	public void reset() {
 		history.clear();
 		clearAllFeatures();
+	}
+
+	@Override
+	public String toString() {
+		return Objects.toStringHelper(this)
+			.add("features", super.toString())
+			.add("history", history)
+			.toString();
 	}
 }

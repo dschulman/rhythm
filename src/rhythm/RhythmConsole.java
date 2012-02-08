@@ -41,6 +41,8 @@ public class RhythmConsole {
 		String[] parts = input.split("\\s+");
 		if (parts.length == 0)
 			System.out.println("missing command!");
+		else if (parts[0].equalsIgnoreCase("context"))
+			cmdContext(parts);
 		else if (parts[0].equalsIgnoreCase("output"))
 			cmdOutput(parts);
 		else if (parts[0].equalsIgnoreCase("reset"))
@@ -50,6 +52,10 @@ public class RhythmConsole {
 		return true;
 	}
 
+	private void cmdContext(String[] args) {
+		System.out.println(context);
+	}
+	
 	private void cmdOutput(String[] args) {
 		if (args.length != 2)
 			System.out.println("Usage: output (beat|string)");
