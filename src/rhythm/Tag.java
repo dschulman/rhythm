@@ -22,7 +22,6 @@ public class Tag implements Processor {
 		String[] tags = tagger.tag(s.tokensTextArray());
 		int n = 0;
 		for (Token t : s.tokens())
-			t.put(Features.TAG, tags[n++]);
+			t.set(Features.TAG, tags[n++]);
 	}
-
 }

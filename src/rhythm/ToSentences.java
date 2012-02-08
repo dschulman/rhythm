@@ -38,8 +38,8 @@ public class ToSentences {
 			ss.add(new Sentence(tokenizer.tokenize(raw)));
 		if (!ss.isEmpty()) {
 			// TODO one input may not be one turn; allow user annotations
-			ss.get(0).put(Features.TURN_START);
-			ss.get(ss.size()-1).put(Features.TURN_END);
+			ss.get(0).set(Features.TURN_START);
+			ss.get(ss.size()-1).set(Features.TURN_END);
 		}
 		return ss;
 	}

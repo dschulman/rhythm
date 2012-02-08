@@ -4,9 +4,9 @@ public class TagFeatureExtract implements Processor {
 	public void process(Context c, Sentence s) {
 		for (Token t : s.tokens()) {
 			String tag = t.get(Features.TAG);
-			t.maybePut(Features.CLASS, asWordClass(tag));
-			t.maybePut(Features.NUMBER, asWordNumber(tag));
-			t.maybePut(Features.PERSON, asWordPerson(tag));
+			t.maybeSet(Features.CLASS, asWordClass(tag));
+			t.maybeSet(Features.NUMBER, asWordNumber(tag));
+			t.maybeSet(Features.PERSON, asWordPerson(tag));
 		}
 	}
 	

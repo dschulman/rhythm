@@ -9,7 +9,7 @@ public class ThemeRhemeChunk implements Processor {
 		Intervals infoStruct = new Intervals();
 		for (Interval clause : s.get(Features.CLAUSES))
 			split(s, clause, infoStruct);
-		s.put(Features.INFORMATION_STRUCTURE, infoStruct);
+		s.set(Features.INFORMATION_STRUCTURE, infoStruct);
 	}
 
 	private void split(Sentence s, Interval clause, Intervals out) {
@@ -72,7 +72,7 @@ public class ThemeRhemeChunk implements Processor {
 	
 	private void maybeAdd(Intervals out, Information info, Interval i) {
 		if (i != null) {
-			i.put(Features.INFORMATION, info);
+			i.set(Features.INFORMATION, info);
 			out.add(i);
 		}
 	}

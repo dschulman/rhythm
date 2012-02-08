@@ -9,14 +9,15 @@ import com.google.common.collect.Maps;
 public class Features {
 	private final Map<Feature<?>, Object> features = Maps.newHashMap();
 	
-	@SuppressWarnings("unchecked")
-	public <T> T put(Feature<T> key, T value) {
-		return (T) features.put(key, value);
+	public <T> Features set(Feature<T> key, T value) {
+		features.put(key, value);
+		return this;
 	}
 	
-	public <T> void maybePut(Feature<T> key, T value) {
+	public <T> Features maybeSet(Feature<T> key, T value) {
 		if (value != null)
-			put(key, value);
+			features.put(key, value);
+		return this;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -36,10 +37,9 @@ public class Features {
 		return features.containsKey(key);
 	}
 	
-	public boolean put(Feature<Void> key) {
-		boolean wasSet = features.containsKey(key);
+	public Features set(Feature<Void> key) {
 		features.put(key, null);
-		return wasSet;
+		return this;
 	}
 	
 	public boolean is(Feature<Void> key) {

@@ -8,11 +8,11 @@ public class PostureDialogueGenerator implements Processor {
 		// TODO is this wrong if a non-starting clause changes topic?
 		boolean shift = any(s.get(CLAUSES), has_(TOPIC_SHIFT));
 		if (Math.random() < shiftAtStart(c, s, shift, s.is(TURN_START)))
-			s.add(new Behavior("posture", 0, 0));
+			s.addBehavior("posture", 0);
 		
 		// TODO need external annotation: will our next turn shift the topic?
 		if (Math.random() < shiftAtEnd(c, s, false, s.is(TURN_END)))
-			s.add(new Behavior("posture", s.size(), s.size()));
+			s.addBehavior("posture", s.size());
 	}
 	
 	protected double shiftAtStart(Context c, Sentence s, boolean newTopic, boolean newTurn) {

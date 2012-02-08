@@ -26,6 +26,6 @@ public class ClauseChunk implements Processor {
 		}
 		if (low < high)
 			clauses.add(low, high);
-		s.put(Features.CLAUSES, clauses);
+		s.set(Features.CLAUSES, clauses);
 	}
 }

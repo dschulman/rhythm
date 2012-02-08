@@ -11,6 +11,6 @@ public class HeadnodGenerator implements Processor {
 			if (info.has(INFORMATION, Rheme))
 				for (Token t : s.tokensIn(info))
 					if (t.is(Features.NEW))
-						s.add(new Behavior("headnod", t.index(), t.index()+1));
+						s.addBehavior("headnod", t);
 	}
 }

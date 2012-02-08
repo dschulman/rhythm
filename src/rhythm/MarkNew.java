@@ -10,7 +10,7 @@ public class MarkNew implements Processor {
 			WordClass wc = t.get(Features.CLASS);
 			if ((wc==Noun) || (wc==Verb) || (wc==Adjective))
 				if (c.addDiscourseEntity(t))
-					t.put(Features.NEW);
+					t.set(Features.NEW);
 		}
 	}
 }

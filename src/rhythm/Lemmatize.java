@@ -23,7 +23,7 @@ public class Lemmatize implements Processor {
 		for (Token t : s.tokens()) {
 			List<String> lemmas = stemmer.findStems(t.text(), getPos(t));
 			if (!lemmas.isEmpty())
-				t.put(Features.LEMMA, lemmas.get(0));
+				t.set(Features.LEMMA, lemmas.get(0));
 		}
 	}
 	

@@ -74,11 +74,11 @@ public class MarkTopicShift implements Processor {
 		for (Interval clause : s.get(Features.CLAUSES))
 			for (Marker m : markers)
 				if (testMarker(s, clause, m)) {
-					clause.put(Features.TOPIC_SHIFT, m.type);
+					clause.set(Features.TOPIC_SHIFT, m.type);
 					markerInts.add(clause.low(), clause.low()+m.length());
 					break;
 				}
-		s.put(Features.DISCOURSE_MARKERS, markerInts);
+		s.set(Features.DISCOURSE_MARKERS, markerInts);
 	}
 
 	private boolean testMarker(Sentence s, Interval clause, Marker m) {

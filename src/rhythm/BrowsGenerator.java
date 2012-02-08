@@ -11,6 +11,6 @@ public class BrowsGenerator implements Processor {
 				for (Interval p : s.get(Features.PHRASES).in(info))
 					if (p.get(Features.PHRASE_TYPE)==PhraseType.NounPhrase)
 						if (any(s.tokensIn(p), is_(NEW)))
-							s.add(new Behavior("brows", p.low(), p.high()));
+							s.addBehavior("brows", p);
 	}
 }

@@ -1,5 +1,6 @@
 package rhythm;
 
+import static rhythm.Features.DIRECTION;
 import static rhythm.Features.INFORMATION_STRUCTURE;
 
 import java.util.Iterator;
@@ -21,21 +22,15 @@ public class GazeGenerator implements Processor {
 		switch (info.get(Features.INFORMATION)) {
 		case Theme:
 			if (isStart || Math.random()<themeStartAway(c, s))
-				gaze(s, info, "AWAY");
+				s.addBehavior("gaze", info).set(DIRECTION, "AWAY");
 			break;
 		case Rheme:
 			if (isEnd || Math.random()<rhemeEndTowards(c, s))
-				gaze(s, info, "TOWARDS");
+				s.addBehavior("gaze", info).set(DIRECTION, "TOWARDS");
 			break;
 		}
 	}
 	
 	protected double themeStartAway(Context c, Sentence s) { return 0.7; }
 	protected double rhemeEndTowards(Context c, Sentence s) { return 0.73; }
-	
-	private void gaze(Sentence s, Interval i, String dir) {
-		Behavior b = new Behavior("gaze", i.low(), i.high());
-		b.put(Features.DIRECTION, dir);
-		s.add(b);
-	}
 }

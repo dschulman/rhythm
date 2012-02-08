@@ -25,10 +25,10 @@ public class PhraseChunk implements Processor {
 		Intervals phrases = new Intervals();
 		for (Span span : chunker.chunkAsSpans(text, tags)) {
 			Interval phrase = phrases.add(span.getStart(), span.getEnd());
-			phrase.put(Features.TAG, span.getType());
-			phrase.maybePut(Features.PHRASE_TYPE, asPtype(span.getType()));
+			phrase.set(Features.TAG, span.getType());
+			phrase.maybeSet(Features.PHRASE_TYPE, asPtype(span.getType()));
 		}
-		s.put(Features.PHRASES, phrases);
+		s.set(Features.PHRASES, phrases);
 	}
 
 	private PhraseType asPtype(String s) {

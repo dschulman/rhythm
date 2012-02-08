@@ -68,8 +68,22 @@ public class Sentence extends Features {
 		return Iterables.toArray(tokensText(), String.class);
 	}
 	
-	public void add(Behavior b) {
+	public Behavior addBehavior(String type, int low, int high) {
+		Behavior b = new Behavior(type, low, high);
 		behaviors.add(b);
+		return b;
+	}
+	
+	public Behavior addBehavior(String type, Interval i) {
+		return addBehavior(type, i.low(), i.high());
+	}
+	
+	public Behavior addBehavior(String type, Token t) {
+		return addBehavior(type, t.index(), t.index()+1);
+	}
+	
+	public Behavior addBehavior(String type, int index) {
+		return addBehavior(type, index, index);
 	}
 	
 	public Iterable<AnnotatedToken> annotated() {
