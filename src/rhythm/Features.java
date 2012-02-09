@@ -83,7 +83,8 @@ public class Features {
 	public static final Feature<PhraseType> PHRASE_TYPE = Feature.named("PHRASE_TYPE");
 	public static final Feature<Information> INFORMATION = Feature.named("INFORMATION");
 	public static final Feature<Void> NEW = Feature.named("NEW");
-	public static final Feature<TopicShiftType> TOPIC_SHIFT = Feature.named("TOPIC_SHIFT");
+	public static final Feature<DiscourseMarker> MARKER_TYPE = Feature.named("MARKER_TYPE");
+	public static final Feature<DiscourseMarker> TOPIC_SHIFT = Feature.named("TOPIC_SHIFT");
 	
 	public static final Feature<Intervals> PHRASES = Feature.named("PHRASES");
 	public static final Feature<Intervals> CLAUSES = Feature.named("CLAUSES");

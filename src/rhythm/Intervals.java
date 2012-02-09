@@ -25,6 +25,11 @@ public class Intervals implements Iterable<Interval> {
 		ints.add(i);
 	}
 	
+	public Interval containing(int index) {
+		Interval floor = ints.floor(new Interval(index, index));
+		return (floor!=null) && floor.contains(index) ? floor : null;
+	}
+	
 	public boolean anyOverlap(Interval i) {
 		Interval floor = ints.floor(i);
 		Interval ceiling = ints.ceiling(i);
