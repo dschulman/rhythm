@@ -29,7 +29,8 @@ public class Rhythm {
 			new HeadnodAckGenerator(),
 			new PostureMonologueGenerator(),
 			new GazeGenerator(),
-			new UpdateContext());
+			new UpdateContext(),
+			new ConflictFilter());
 		this.output = new BeatXmlCompiler();
 	}
 	

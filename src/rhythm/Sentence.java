@@ -1,5 +1,6 @@
 package rhythm;
 
+import static com.google.common.collect.Iterables.filter;
 import static com.google.common.collect.Iterators.peekingIterator;
 import static rhythm.Interval.CompareHigh;
 import static rhythm.Interval.CompareLow;
@@ -86,13 +87,22 @@ public class Sentence extends Features {
 		return addBehavior(type, index, index);
 	}
 	
+	public List<Behavior> allBehaviors() {
+		return CompareLow.sortedCopy(behaviors);
+	}
+	
+	public List<Behavior> behaviors() {
+		return CompareLow.sortedCopy(filter(behaviors, is_(FILTERED)));
+	}
+	
 	public Iterable<AnnotatedToken> annotated() {
+		final Iterable<Behavior> bs = filter(behaviors, is_(FILTERED));
 		return new Iterable<AnnotatedToken>() {
 			public Iterator<AnnotatedToken> iterator() {
 				final PeekingIterator<Behavior> starting =
-					peekingIterator(CompareLow.sortedCopy(behaviors).iterator());
+					peekingIterator(CompareLow.sortedCopy(bs).iterator());
 				final PeekingIterator<Behavior> ending = 
-					peekingIterator(CompareHigh.sortedCopy(behaviors).iterator());
+					peekingIterator(CompareHigh.sortedCopy(bs).iterator());
 				return new AbstractIterator<AnnotatedToken>() {
 					int n = 0;
 					protected AnnotatedToken computeNext() {

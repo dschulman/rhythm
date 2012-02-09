@@ -94,6 +94,8 @@ public class Features {
 	public static final Feature<Void> TURN_START = Feature.named("TURN_START");
 	public static final Feature<Void> TURN_END = Feature.named("TURN_END");
 	
+	public static final Feature<Void> FILTERED = Feature.named("FILTERED");
+	
 	public static final Feature<String> DIRECTION = Feature.named("DIRECTION");
 	public static final Feature<String> ACCENT = Feature.named("ACCENT");
 	public static final Feature<String> ENDTONE = Feature.named("ENDTONE");
