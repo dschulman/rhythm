@@ -26,6 +26,7 @@ public class Rhythm {
 			new BeatGenerator(),
 			new BrowsGenerator(),
 			new HeadnodGenerator(),
+			new HeadnodAckGenerator(),
 			new PostureMonologueGenerator(),
 			new GazeGenerator(),
 			new UpdateContext());
