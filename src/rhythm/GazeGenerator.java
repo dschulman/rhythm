@@ -22,11 +22,11 @@ public class GazeGenerator implements Processor {
 		switch (info.get(Features.INFORMATION)) {
 		case Theme:
 			if (isStart || Math.random()<themeStartAway(c, s))
-				s.addBehavior("gaze", info).set(DIRECTION, "AWAY");
+				s.addBehavior("gaze", info).priority(1).set(DIRECTION, "AWAY");
 			break;
 		case Rheme:
 			if (isEnd || Math.random()<rhemeEndTowards(c, s))
-				s.addBehavior("gaze", info).set(DIRECTION, "TOWARDS");
+				s.addBehavior("gaze", info).priority(5).set(DIRECTION, "TOWARDS");
 			break;
 		}
 	}

@@ -10,6 +10,6 @@ public class BeatGenerator implements Processor {
 			if (info.has(INFORMATION, Rheme))
 				for (Token t : s.tokensIn(info))
 					if (t.is(NEW))
-						s.addBehavior("beat", t);
+						s.addBehavior("beat", t).priority(1);
 	}
 }

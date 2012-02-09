@@ -11,7 +11,7 @@ public class PostureMonologueGenerator implements Processor {
 		for (Interval clause : s.get(Features.CLAUSES))
 			if (clause.has(Features.TOPIC_SHIFT))
 				if (Math.random() < shift(c, s, true)) {
-					s.addBehavior("posture", clause);
+					s.addBehavior("posture", clause).priority(15);
 					anyShifts = true;
 				}
 		return anyShifts;
