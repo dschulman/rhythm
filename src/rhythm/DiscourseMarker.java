@@ -1,6 +1,7 @@
 package rhythm;
 
 public enum DiscourseMarker {
+	Ack(false),
 	Push(true), 
 	Pop(true), 
 	Next(true), 

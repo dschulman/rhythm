@@ -51,9 +51,10 @@ public class MarkMarkers implements Processor {
 		List<Marker> markers = Lists.newArrayList();
 		String line;
 		while ((line = r.readLine()) != null) {
+			line = line.trim();
+			if (line.length()==0) continue;
 			if (line.startsWith("#")) continue;
 			String[] parts = line.split("\\s+");
-			if (parts.length == 0) continue;
 			if (parts.length==1)
 				throw new IOException("Error in discourse markers file, line " + r.getLineNumber());
 			try {
