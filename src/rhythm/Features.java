@@ -105,4 +105,5 @@ public class Features {
 	public static final Feature<Void> LAST_SESSION = Feature.named("LAST_SESSION");
 	public static final Feature<Integer> OFFSET = Feature.named("OFFSET");
 	public static final Feature<Double> TIME_OFFSET = Feature.named("TIME_OFFSET");
+	public static final Feature<Double> ALLIANCE = Feature.named("ALLIANCE");
 }
