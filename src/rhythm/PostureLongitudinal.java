@@ -1,5 +1,8 @@
 package rhythm;
 
+import static rhythm.MathUtil.invLogit;
+import static rhythm.MathUtil.logit;
+
 public class PostureLongitudinal {
 	public static class Monologue extends PostureMonologueGenerator {
 		@Override
@@ -28,8 +31,4 @@ public class PostureLongitudinal {
 		}
 		return p;
 	}
-
-	// TODO these probably belong in a math utils
-	public static double logit(double p) { return Math.log(p/(1-p)); }
-	public static double invLogit(double q) { return 1/(1+Math.exp(-q)); }
 }
