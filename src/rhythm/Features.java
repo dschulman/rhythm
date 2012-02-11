@@ -94,12 +94,15 @@ public class Features {
 	public static final Feature<Void> TURN_START = Feature.named("TURN_START");
 	public static final Feature<Void> TURN_END = Feature.named("TURN_END");
 	
+	public static final Feature<AffectiveContent> AFFECT = Feature.named("AFFECT");
+	
 	public static final Feature<Void> FILTERED = Feature.named("FILTERED");
 	
 	public static final Feature<String> DIRECTION = Feature.named("DIRECTION");
 	public static final Feature<String> ACCENT = Feature.named("ACCENT");
 	public static final Feature<String> ENDTONE = Feature.named("ENDTONE");
 	public static final Feature<Long> RATE = Feature.named("RATE");
+	public static final Feature<Affect> EXPRESSION = Feature.named("EXPRESSION");
 	
 	public static final Feature<Integer> SESSION_INDEX = Feature.named("SESSION_INDEX");
 	public static final Feature<Void> LAST_SESSION = Feature.named("LAST_SESSION");
