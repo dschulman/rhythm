@@ -68,7 +68,8 @@ public class RhythmConsole {
 	}
 
 	public static void main(String[] args) throws IOException {
-		Rhythm r = new Rhythm(new Configuration(args));
+		Configuration conf = new Configuration(args);
+		Rhythm r = Rhythm.createStd(conf, Rhythm.basicGeneration());
 		RhythmConsole rc = new RhythmConsole(r);
 		rc.run();
 	}

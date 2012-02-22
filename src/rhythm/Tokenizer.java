@@ -11,11 +11,11 @@ import opennlp.tools.sentdetect.SentenceModel;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
 
-public class ToSentences {
+public class Tokenizer {
 	private final SentenceDetectorME sentDetector;
 	private final TokenizerME tokenizer;
 	
-	public ToSentences(Configuration conf) throws IOException {
+	public Tokenizer(Configuration conf) throws IOException {
 		InputStream in = conf.openModelStream("sentdetect", "en-sent.bin");
 		try {
 			sentDetector = new SentenceDetectorME(new SentenceModel(in));
