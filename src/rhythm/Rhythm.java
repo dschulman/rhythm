@@ -2,6 +2,7 @@ package rhythm;
 
 import java.io.IOException;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 
@@ -40,6 +41,13 @@ public class Rhythm {
 			for (Processor p : procs)
 				p.process(c, s);
 		return Iterables.transform(ss, output);
+	}
+	
+	private static final Joiner JoinSentences = 
+		Joiner.on(' ').skipNulls();
+	
+	public String processAll(Context c, String input) {
+		return JoinSentences.join(process(c, input));
 	}
 	
 	public void setOutput(Compiler output) {
