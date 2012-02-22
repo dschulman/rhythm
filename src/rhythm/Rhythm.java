@@ -50,7 +50,8 @@ public class Rhythm {
 			new HeadnodGenerator(),
 			new HeadnodAckGenerator(),
 			new PostureMonologueGenerator(),
-			new GazeGenerator());
+			new GazeGenerator(),
+			new FaceGenerator());
 	}
 	
 	public static ImmutableList<Processor> longitudinalGeneration() {
@@ -62,6 +63,7 @@ public class Rhythm {
 			new HeadnodAckLongitudinal(),
 			new PostureLongitudinal.Monologue(),
 			new GazeLongitudinal(),
+			new FaceLongitudinal(),
 			new ArticulationRateLongitudinal());
 	}
 	
