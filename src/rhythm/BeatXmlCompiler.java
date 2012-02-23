@@ -26,15 +26,11 @@ public class BeatXmlCompiler implements Compiler {
 
 	private void compile(Sentence s, XMLStreamWriter w)
 			throws XMLStreamException {
-		w.writeStartDocument();
-		w.writeStartElement("speech");
 		for (AnnotatedToken t : s.annotated()) {
 			writeEnding(t.ending(), w);
 			writeStarting(t.starting(), w);
 			writeToken(t.token(), w);
 		}
-		w.writeEndElement();
-		w.writeEndDocument();
 	}
 
 	private void writeEnding(Iterable<Behavior> ending, XMLStreamWriter w)
