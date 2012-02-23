@@ -4,6 +4,7 @@ import static rhythm.Features.INFORMATION;
 import static rhythm.Features.INFORMATION_STRUCTURE;
 import static rhythm.Information.Rheme;
 
+// TODO this rule overgenerates badly; excluded in default configs
 public class HeadnodGenerator implements Processor {
 	public void process(Context c, Sentence s) {
 		// headnod to mark new words in a rheme
