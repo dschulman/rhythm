@@ -35,9 +35,12 @@ public class BeatXmlCompiler implements Compiler {
 
 	private void writeEnding(Iterable<Behavior> ending, XMLStreamWriter w)
 			throws XMLStreamException {
-		for (Behavior b : ending)
+		for (Behavior b : ending) {
 			if ("brows".equals(b.type()))
 				writeEmpty(w, "EYEBROWS", a("DIR", "DOWN"));
+			else if ("articulation-rate".equals(b.type()))
+				w.writeEndElement();
+		}
 	}
 
 	private void writeStarting(Iterable<Behavior> starting, XMLStreamWriter w)
@@ -51,7 +54,10 @@ public class BeatXmlCompiler implements Compiler {
 				writeEmpty(w, "HEADNOD");
 			else if ("posture".equals(b.type()))
 				writeEmpty(w, "posture");
-			else if ("gaze".equals(b.type()) && b.has(Features.DIRECTION, "AWAY")) {
+			else if ("articulation-rate".equals(b.type())) {
+				w.writeStartElement("prosody");
+				w.writeAttribute("rate", "" + (1+(b.get(Features.RATE)/100.0)));
+			} else if ("gaze".equals(b.type()) && b.has(Features.DIRECTION, "AWAY")) {
 				writeEmpty(w, "gaze", a("dir", "AWAY"));
 				writeEmpty(w, "delay", a("ms", "200")); //TODO configurable delay
 				writeEmpty(w, "gaze", a("dir", "TOWARDS"));
