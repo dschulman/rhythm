@@ -61,7 +61,16 @@ public class BeatXmlCompiler implements Compiler {
 				writeEmpty(w, "gaze", a("dir", "AWAY"));
 				writeEmpty(w, "delay", a("ms", "200")); //TODO configurable delay
 				writeEmpty(w, "gaze", a("dir", "TOWARDS"));
-			}
+			} else if ("face".equals(b.type()))
+				writeEmpty(w, "FACE", a("EXPR", affectToExpr(b.get(Features.EXPRESSION))));
+		}
+	}
+	
+	private String affectToExpr(Affect a) {
+		switch (a) {
+		case Happy: return "SMILE";
+		case Concern: return "CONCERN";
+		default: return "WARM";
 		}
 	}
 	

@@ -13,6 +13,9 @@ public final class AffectiveContent {
 		this.strength = strength;
 	}
 
+	public static final AffectiveContent NEUTRAL = 
+		new AffectiveContent(Affect.Neutral, 1);
+	
 	@Override
 	public int hashCode() {
 		return Objects.hashCode(affect, strength);
