@@ -56,7 +56,8 @@ public class BeatXmlCompiler implements Compiler {
 				writeEmpty(w, "posture");
 			else if ("articulation-rate".equals(b.type())) {
 				w.writeStartElement("prosody");
-				w.writeAttribute("rate", "" + (1+(b.get(Features.RATE)/100.0)));
+				long rate = b.get(Features.RATE);
+				w.writeAttribute("rate", (rate>0 ? "+" : "") + b.get(Features.RATE) + "%");
 			} else if ("gaze".equals(b.type()) && b.has(Features.DIRECTION, "AWAY")) {
 				writeEmpty(w, "gaze", a("dir", "AWAY"));
 				writeEmpty(w, "delay", a("ms", "200")); //TODO configurable delay
