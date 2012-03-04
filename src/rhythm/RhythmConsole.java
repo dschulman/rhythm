@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import com.google.common.base.Charsets;
 
 public class RhythmConsole {
-	private final Rhythm rhythm;
+	private Rhythm rhythm;
 	private final Context context;
 	private final BufferedReader reader;
 
@@ -41,11 +41,13 @@ public class RhythmConsole {
 		String[] parts = input.split("\\s+");
 		if (parts.length == 0)
 			System.out.println("missing command!");
-		else if (parts[0].equalsIgnoreCase("context"))
+		else if ("context".startsWith(parts[0]))
 			cmdContext(parts);
-		else if (parts[0].equalsIgnoreCase("output"))
+		else if ("generation".startsWith(parts[0]))
+			cmdGeneration(parts);
+		else if ("output".startsWith(parts[0]))
 			cmdOutput(parts);
-		else if (parts[0].equalsIgnoreCase("reset"))
+		else if ("reset".startsWith(parts[0]))
 			context.reset();
 		else
 			System.out.println("unknown command: " + parts[0]);
@@ -55,14 +57,25 @@ public class RhythmConsole {
 	private void cmdContext(String[] args) {
 		System.out.println(context);
 	}
+
+	private void cmdGeneration(String[] args) {
+		if (args.length != 2)
+			System.out.println("Usage: generation (basic|longitudinal)");
+		else if ("basic".startsWith(args[1]))
+			rhythm = rhythm.setGeneration(Rhythm.basicGeneration());
+		else if ("longitudinal".startsWith(args[1]))
+			rhythm = rhythm.setGeneration(Rhythm.longitudinalGeneration());
+		else
+			System.out.println("unknown generation type: " + args[1]);
+	}
 	
 	private void cmdOutput(String[] args) {
 		if (args.length != 2)
 			System.out.println("Usage: output (beat|string)");
-		else if ("beat".equalsIgnoreCase(args[1]))
-			rhythm.setOutput(new BeatXmlCompiler());
-		else if ("string".equalsIgnoreCase(args[1]))
-			rhythm.setOutput(Compiler.ToString);
+		else if ("beat".startsWith(args[1]))
+			rhythm = rhythm.setOutput(new BeatXmlCompiler());
+		else if ("string".startsWith(args[1]))
+			rhythm = rhythm.setOutput(Compiler.ToString);
 		else
 			System.out.println("Unknown output type: " + args[1]);
 	}
