@@ -15,4 +15,8 @@ public class Feature<T> {
 	public static <T> Feature<T> named(String name) {
 		return new Feature<T>(name);
 	}
+	
+	public String getName() {
+		return name;
+	}
 }

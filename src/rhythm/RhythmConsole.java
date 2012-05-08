@@ -49,6 +49,10 @@ public class RhythmConsole {
 			cmdOutput(parts);
 		else if ("reset".startsWith(parts[0]))
 			context.reset();
+		else if ("set".startsWith(parts[0]))
+			cmdSet(parts);
+		else if ("unset".startsWith(parts[0]))
+			cmdUnset(parts);
 		else
 			System.out.println("unknown command: " + parts[0]);
 		return true;
@@ -80,6 +84,28 @@ public class RhythmConsole {
 			System.out.println("Unknown output type: " + args[1]);
 	}
 
+	private void cmdSet(String[] args) {
+		if ((args.length != 2) && (args.length != 3))
+			System.out.println("Usage: set FEATURE [VALUE]");
+		try {
+			context.setByName(args[1], args.length >= 3 ? args[2] : "");
+			System.out.println(context);
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	private void cmdUnset(String[] args) {
+		if (args.length != 2)
+			System.out.println("Usage: unset FEATURE");
+		try {
+			context.clearByName(args[1]);
+			System.out.println(context);
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
 	public static void main(String[] args) throws IOException {
 		Configuration conf = new Configuration(args);
 		Rhythm r = Rhythm.createStd(conf, Rhythm.basicGeneration());

@@ -1,5 +1,10 @@
 package rhythm;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.Iterator;
 import java.util.Map;
 
 import com.google.common.base.Objects;
@@ -109,4 +114,56 @@ public class Features {
 	public static final Feature<Integer> OFFSET = Feature.named("OFFSET");
 	public static final Feature<Double> TIME_OFFSET = Feature.named("TIME_OFFSET");
 	public static final Feature<Double> ALLIANCE = Feature.named("ALLIANCE");
+	
+	// slow; primarily for console testing
+	public boolean clearByName(String name) {
+		for (Iterator<Feature<?>> it = features.keySet().iterator(); it.hasNext();) {
+			if (it.next().getName().equals(name)) {
+				it.remove();
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	// slow and ugly; primarily for console testing
+	public void setByName(String name, String value) {
+		try {
+			Field f = Features.class.getField(name);
+			if ( ! Modifier.isStatic(f.getModifiers()))
+				throw new IllegalArgumentException("invalid feature: " + name);
+			
+			Type t = f.getGenericType();
+			if ( ! (t instanceof ParameterizedType))
+				throw new IllegalArgumentException("invalid feature: " + name);
+			if (! ((ParameterizedType) t).getRawType().equals(Feature.class))
+				throw new IllegalArgumentException("invalid feature: " + name);
+			
+			Feature<?> feature = (Feature<?>) f.get(null);
+			Type vt = ((ParameterizedType) t).getActualTypeArguments()[0];
+			
+			if (Void.class.equals(vt))
+				features.put(feature, null);
+			else if (String.class.equals(vt))
+				features.put(feature, value);
+			else if (Integer.class.equals(vt))
+				features.put(feature, Integer.valueOf(value));
+			else if (Double.class.equals(vt))
+				features.put(feature, Double.valueOf(value));
+			else if (Long.class.equals(vt))
+				features.put(feature, Long.valueOf(value));
+			else if ((vt instanceof Class) && ((Class<?>) vt).isEnum()) {
+				@SuppressWarnings({ "unchecked", "rawtypes" })
+				Object enumval = Enum.valueOf((Class<Enum>) vt, value);
+				features.put(feature, enumval);
+			} else
+				throw new IllegalArgumentException("cannot create feature from string: " + name);
+		} catch (SecurityException e) {
+			throw new IllegalArgumentException("invalid feature: " + name);
+		} catch (NoSuchFieldException e) {
+			throw new IllegalArgumentException("invalid feature: " + name);
+		} catch (IllegalAccessException e) {
+			throw new IllegalArgumentException("invalid feature: " + name);
+		}
+	}
 }
