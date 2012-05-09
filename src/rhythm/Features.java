@@ -164,6 +164,8 @@ public class Features {
 			throw new IllegalArgumentException("invalid feature: " + name);
 		} catch (IllegalAccessException e) {
 			throw new IllegalArgumentException("invalid feature: " + name);
+		} catch (NumberFormatException e) {
+			throw new IllegalArgumentException("invalid feature value: " + value + " for " + name);
 		}
 	}
 }
