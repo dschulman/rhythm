@@ -36,4 +36,18 @@ public final class AffectiveContent {
 			.add("strength", strength)
 			.toString();
 	}
+	
+	// Parses strings of the form "affect" or "affect(strength)"
+	// e.g. happy(0.5)
+	// unspecified strength defaults to 0.5
+	public static AffectiveContent valueOf(String s) {
+		int openParen = s.indexOf("(");
+		int closeParen = s.lastIndexOf(")");
+		double strength = 0.5;
+		if ((openParen != -1) && (closeParen == s.length()-1)) {
+			strength = Double.parseDouble(s.substring(openParen+1, closeParen));
+			s = s.substring(0, openParen);
+		}
+		return new AffectiveContent(Affect.valueOf(s), strength);
+	}
 }

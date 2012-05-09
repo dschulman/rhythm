@@ -152,6 +152,8 @@ public class Features {
 				features.put(feature, Double.valueOf(value));
 			else if (Long.class.equals(vt))
 				features.put(feature, Long.valueOf(value));
+			else if (AffectiveContent.class.equals(vt))
+				features.put(feature, AffectiveContent.valueOf(value));
 			else if ((vt instanceof Class) && ((Class<?>) vt).isEnum()) {
 				@SuppressWarnings({ "unchecked", "rawtypes" })
 				Object enumval = Enum.valueOf((Class<Enum>) vt, value);
