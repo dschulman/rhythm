@@ -35,18 +35,22 @@ public class BeatXmlCompiler implements Compiler {
 
 	private void writeEnding(Iterable<Behavior> ending, XMLStreamWriter w)
 			throws XMLStreamException {
-		for (Behavior b : ending) {
-			if ("brows".equals(b.type()))
-				writeEmpty(w, "EYEBROWS", a("DIR", "DOWN"));
-			else if ("articulation-rate".equals(b.type()))
-				w.writeEndElement();
-		}
+		for (Behavior b : ending)
+			if (!b.is(Features.FILTERED)) {
+				if ("brows".equals(b.type()))
+					writeEmpty(w, "EYEBROWS", a("DIR", "DOWN"));
+				else if ("articulation-rate".equals(b.type()))
+					w.writeEndElement();
+			}
 	}
 
 	private void writeStarting(Iterable<Behavior> starting, XMLStreamWriter w)
 			throws XMLStreamException {
 		for (Behavior b : starting) {
-			if ("beat".equals(b.type()))
+			if (b.is(Features.FILTERED)) {
+				if ("face".equals(b.type()))
+					writeEmpty(w, "FACE", a("EXPR", affectToExpr(Affect.Neutral)));
+			} else if ("beat".equals(b.type()))
 				writeEmpty(w, "gesture", a("hand", "L"), a("cmd", "BEAT"));
 			else if ("brows".equals(b.type()))
 				writeEmpty(w, "EYEBROWS", a("DIR", "UP"));

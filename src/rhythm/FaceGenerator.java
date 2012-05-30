@@ -7,9 +7,9 @@ public class FaceGenerator implements Processor {
 	public void process(Context c, Sentence s) {
 		// can set affect on either the context or sentence level (sentence has priority)
 		AffectiveContent ac = s.get(AFFECT, c.get(AFFECT, AffectiveContent.NEUTRAL));
-		Affect a = Math.random() < strength(c, ac) ? ac.affect : Affect.Neutral;
-		// TODO should be setting expression only on CHANGES?
-		s.addBehavior("face", 0, s.size()).set(EXPRESSION, a);
+		s.addBehavior("face", 0, s.size())
+		 .probability(strength(c, ac))
+		 .set(EXPRESSION, ac.affect);
 	}
 	
 	protected double strength(Context c, AffectiveContent ac) {

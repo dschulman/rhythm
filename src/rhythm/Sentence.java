@@ -97,13 +97,12 @@ public class Sentence extends Features {
 	}
 	
 	public Iterable<AnnotatedToken> annotated() {
-		final Iterable<Behavior> bs = filter(behaviors, not(is_(FILTERED)));
 		return new Iterable<AnnotatedToken>() {
 			public Iterator<AnnotatedToken> iterator() {
 				final PeekingIterator<Behavior> starting =
-					peekingIterator(CompareLow.sortedCopy(bs).iterator());
+					peekingIterator(CompareLow.sortedCopy(behaviors).iterator());
 				final PeekingIterator<Behavior> ending = 
-					peekingIterator(CompareHigh.sortedCopy(bs).iterator());
+					peekingIterator(CompareHigh.sortedCopy(behaviors).iterator());
 				return new AbstractIterator<AnnotatedToken>() {
 					int n = 0;
 					protected AnnotatedToken computeNext() {

@@ -17,8 +17,7 @@ public class HeadnodAckGenerator implements Processor {
 			Intervals dm = s.get(DISCOURSE_MARKERS);
 			if (dm.containing(0) != null)
 				if (any(dm, has_(MARKER_TYPE, Ack)))
-					if (Math.random() < headnod(c, s))
-						s.addBehavior("headnod", 0);
+					s.addBehavior("headnod", 0).probability(headnod(c, s));
 		}
 	}
 	

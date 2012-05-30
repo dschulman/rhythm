@@ -70,6 +70,7 @@ public class Rhythm {
 	public static ImmutableList<Processor> stdFiltering() {
 		return ImmutableList.of(
 			new UpdateContext(),
+			new ProbabilityFilter(),
 			new ConflictFilter());
 	}
 	
