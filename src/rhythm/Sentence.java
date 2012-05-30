@@ -2,6 +2,7 @@ package rhythm;
 
 import static com.google.common.collect.Iterables.filter;
 import static com.google.common.collect.Iterators.peekingIterator;
+import static com.google.common.base.Predicates.not;
 import static rhythm.Interval.CompareHigh;
 import static rhythm.Interval.CompareLow;
 
@@ -92,11 +93,11 @@ public class Sentence extends Features {
 	}
 	
 	public List<Behavior> behaviors() {
-		return CompareLow.sortedCopy(filter(behaviors, is_(FILTERED)));
+		return CompareLow.sortedCopy(filter(behaviors, not(is_(FILTERED))));
 	}
 	
 	public Iterable<AnnotatedToken> annotated() {
-		final Iterable<Behavior> bs = filter(behaviors, is_(FILTERED));
+		final Iterable<Behavior> bs = filter(behaviors, not(is_(FILTERED)));
 		return new Iterable<AnnotatedToken>() {
 			public Iterator<AnnotatedToken> iterator() {
 				final PeekingIterator<Behavior> starting =

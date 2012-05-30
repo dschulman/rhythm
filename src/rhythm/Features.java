@@ -77,7 +77,7 @@ public class Features {
 	}
 	
 	public static <T> Predicate<Features> is_(Feature<Void> key) {
-		return has_(key, null);
+		return has_(key);
 	}
 	
 	public static final Feature<String> TAG = Feature.named("TAG");
