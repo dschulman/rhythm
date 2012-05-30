@@ -23,18 +23,15 @@ public class GazeGenerator implements Processor {
 		case Theme:
 			s.addBehavior("gaze", info)
 			 .priority(1)
-			 .probability(isStart ? 1 : themeStartAway(c, s))
+			 .probability(isStart ? 1 : 0.7)
 			 .set(DIRECTION, "AWAY");
 			break;
 		case Rheme:
 			s.addBehavior("gaze", info)
 			 .priority(5)
-			 .probability(isEnd ? 1 : rhemeEndTowards(c, s))
+			 .probability(isEnd ? 1 : 0.73)
 			 .set(DIRECTION, "TOWARDS");
 			break;
 		}
 	}
-	
-	protected double themeStartAway(Context c, Sentence s) { return 0.7; }
-	protected double rhemeEndTowards(Context c, Sentence s) { return 0.73; }
 }

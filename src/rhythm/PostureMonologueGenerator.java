@@ -13,7 +13,7 @@ public class PostureMonologueGenerator implements Processor {
 			if (clause.has(Features.TOPIC_SHIFT)) {
 				s.addBehavior("posture", clause)
 				 .priority(15)
-				 .probability(shift(c, s, true));
+				 .probability(0.84);
 				anyShifts = true;
 			}
 		return anyShifts;
@@ -22,10 +22,6 @@ public class PostureMonologueGenerator implements Processor {
 	public void generateOffTopicShift(Context c, Sentence s) {
 		for (Interval clause : s.get(Features.CLAUSES))
 			s.addBehavior("posture", clause)
-			 .probability(shift(c, s, false));
-	}
-	
-	protected double shift(Context c, Sentence s, boolean onTopicShift) {
-		return onTopicShift ? 0.84 : 0.16;
+			 .probability(0.16);
 	}
 }

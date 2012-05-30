@@ -53,18 +53,21 @@ public class Rhythm {
 			new GazeGenerator(),
 			new FaceGenerator());
 	}
+
+	public static ImmutableList<Processor> longitudinalAdjustment() {
+		return ImmutableList.of(
+			new FaceLongitudinal(),
+			new HeadnodAckLongitudinal(),
+			new PostureLongitudinal(),
+			new GazeLongitudinal(),
+			new ArticulationRateLongitudinal());
+				
+	}
 	
 	public static ImmutableList<Processor> longitudinalGeneration() {
-		return ImmutableList.of(
-			new IntonationGenerator(),
-			new BeatGenerator(),
-			new BrowsGenerator(),
-			//new HeadnodGenerator(),
-			new HeadnodAckLongitudinal(),
-			new PostureLongitudinal.Monologue(),
-			new GazeLongitudinal(),
-			new FaceLongitudinal(),
-			new ArticulationRateLongitudinal());
+		return ImmutableList.copyOf(concat(
+			basicGeneration(), 
+			longitudinalAdjustment()));
 	}
 	
 	public static ImmutableList<Processor> stdFiltering() {

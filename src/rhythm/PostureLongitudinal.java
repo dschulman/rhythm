@@ -3,27 +3,14 @@ package rhythm;
 import static rhythm.MathUtil.invLogit;
 import static rhythm.MathUtil.logit;
 
-public class PostureLongitudinal {
-	public static class Monologue extends PostureMonologueGenerator {
-		@Override
-		protected double shift(Context c, Sentence s, boolean onTopicShift) {
-			return adjust(c, super.shift(c, s, onTopicShift));
-		}
+public class PostureLongitudinal implements Processor {
+	public void process(Context c, Sentence s) {
+		for (Behavior b : s.behaviors())
+			if ("posture".equals(b.type()))
+				b.probability(adjust(c, b.probability()));	
 	}
 	
-	public static class Dialogue extends PostureDialogueGenerator {
-		@Override
-		protected double shiftAtStart(Context c, Sentence s, boolean newTopic, boolean newTurn) {
-			return adjust(c, super.shiftAtStart(c, s, newTopic, newTurn));
-		}
-
-		@Override
-		protected double shiftAtEnd(Context c, Sentence s, boolean newTopic, boolean newTurn) {
-			return adjust(c, super.shiftAtEnd(c, s, newTopic, newTurn));
-		}
-	}
-	
-	private static double adjust(Context c, double p) {
+	protected double adjust(Context c, double p) {
 		if ((p > 0) && (p < 1)) {
 			int sessions = c.get(Features.SESSION_INDEX, 0);
 			double minutes = c.get(Features.TIME_OFFSET, 0.0)/60;

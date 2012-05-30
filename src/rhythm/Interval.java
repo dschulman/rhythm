@@ -40,6 +40,10 @@ public class Interval extends Features {
 		return contains(i.low) || i.contains(low);
 	}
 	
+	public boolean at(int x) {
+		return (x==low) && empty();
+	}
+	
 	@Override
 	public String toString() {
 		return "["+low+","+high+")->" + super.toString();

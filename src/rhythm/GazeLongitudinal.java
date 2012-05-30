@@ -3,15 +3,17 @@ package rhythm;
 import static java.lang.Math.exp;
 import static java.lang.Math.pow;
 
-public class GazeLongitudinal extends GazeGenerator {
-	@Override
-	protected double themeStartAway(Context c, Sentence s) {
-		return 1 - adjust(c, 1 - super.themeStartAway(c, s));
-	}
-
-	@Override
-	protected double rhemeEndTowards(Context c, Sentence s) {
-		return adjust(c, super.rhemeEndTowards(c, s));
+public class GazeLongitudinal implements Processor {
+	public void process(Context c, Sentence s) {
+		for (Behavior b : s.behaviors())
+			if ("gaze".equals(b.type())) {
+				double p = b.probability();
+				if ((p > 0) && (p < 1)) {
+					b.probability(
+						b.has(Features.DIRECTION, "AWAY") ?
+						1 - adjust(c, 1 - p) : adjust(c, p));
+				}
+			}
 	}
 	
 	private double adjust(Context c, double p0) {
