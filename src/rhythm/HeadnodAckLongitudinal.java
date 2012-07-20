@@ -17,11 +17,12 @@ public class HeadnodAckLongitudinal implements Processor {
 			int sessions = c.get(SESSION_INDEX, 0);
 			int last = c.is(LAST_SESSION) ? 1 : 0;
 			double alliance = c.get(ALLIANCE, 0.0);
+			double a = c.get(LONGITUDINAL_EFFECT_MULTIPLIER, 1.0);
 			b.probability(invLogit(logit(p)
-				+ 0.06*sessions 
-				- 0.04*last 
-				- 0.28*alliance
-				+ 0.06*sessions*alliance));
+				+ 0.06*sessions*a 
+				- 0.04*last*a
+				- 0.28*alliance*a
+				+ 0.06*sessions*alliance*a));
 		}
 	}
 }

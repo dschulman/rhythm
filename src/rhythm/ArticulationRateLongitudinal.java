@@ -12,7 +12,8 @@ public class ArticulationRateLongitudinal implements Processor {
 	public void process(Context c, Sentence s) {
 		int session = c.get(SESSION_INDEX, 0);
 		int offset = c.get(OFFSET, 0);
-		double adjust = SESSION*session + POSITION*(offset-POS_CENTER)/POS_SCALE;
+		double a = c.get(LONGITUDINAL_EFFECT_MULTIPLIER, 1.0);
+		double adjust = SESSION*a*session + POSITION*a*(offset-POS_CENTER)/POS_SCALE;
 		
 		// TODO should also look at simple acknowledgements
 		for (Interval dm : s.get(DISCOURSE_MARKERS)) {

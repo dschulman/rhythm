@@ -115,6 +115,8 @@ public class Features {
 	public static final Feature<Double> TIME_OFFSET = Feature.named("TIME_OFFSET");
 	public static final Feature<Double> ALLIANCE = Feature.named("ALLIANCE");
 	
+	public static final Feature<Double> LONGITUDINAL_EFFECT_MULTIPLIER = Feature.named("LONGITUDINAL_EFFECT_MULTIPLIER");
+	
 	// slow; primarily for console testing
 	public boolean clearByName(String name) {
 		for (Iterator<Feature<?>> it = features.keySet().iterator(); it.hasNext();) {

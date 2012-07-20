@@ -14,7 +14,8 @@ public class PostureLongitudinal implements Processor {
 		if ((p > 0) && (p < 1)) {
 			int sessions = c.get(Features.SESSION_INDEX, 0);
 			double minutes = c.get(Features.TIME_OFFSET, 0.0)/60;
-			p = invLogit(logit(p) + 0.16*sessions - 0.03*minutes - 0.02*sessions*minutes);
+			double a = c.get(Features.LONGITUDINAL_EFFECT_MULTIPLIER, 1.0);
+			p = invLogit(logit(p) + 0.16*sessions*a - 0.03*minutes*a - 0.02*sessions*minutes*a);
 		}
 		return p;
 	}
