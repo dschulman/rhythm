@@ -64,7 +64,8 @@ public class BeatXmlCompiler implements Compiler {
 				w.writeAttribute("rate", (rate>0 ? "+" : "") + b.get(Features.RATE) + "%");
 			} else if ("gaze".equals(b.type()) && b.has(Features.DIRECTION, "AWAY")) {
 				writeEmpty(w, "gaze", a("dir", "AWAY"));
-				writeEmpty(w, "delay", a("ms", "200")); //TODO configurable delay
+				// TODO configurable delay
+				writeEmpty(w, "delay", a("ms", b.low()==0? "200" : "100"));
 				writeEmpty(w, "gaze", a("dir", "TOWARDS"));
 			} else if ("face".equals(b.type()))
 				writeEmpty(w, "FACE", a("EXPR", affectToExpr(b.get(Features.EXPRESSION))));
