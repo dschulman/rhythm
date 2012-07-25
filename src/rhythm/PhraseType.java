@@ -9,5 +9,5 @@ public enum PhraseType {
 	CoordinatingConjuctionPhrase,
 	SubordinatingConjunctionPhrase,
 	InterjectionPhrase,
-	MultiwordPhrase
+	NonPhraseToken
 }

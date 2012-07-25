@@ -1,7 +1,10 @@
 package rhythm;
 
 import static com.google.common.collect.Iterables.any;
+import static rhythm.Features.CLASS;
 import static rhythm.Features.has_;
+import static rhythm.WordClass.Punctuation;
+import static rhythm.WordClass.Verb;
 
 public class ClauseChunk implements Processor {
 	public void process(Context c, Sentence s) {
@@ -13,10 +16,10 @@ public class ClauseChunk implements Processor {
 			low = Math.min(phrase.low(), low);
 			high = Math.max(phrase.high(), high);
 			hasVerb = hasVerb || 
-				any(s.tokensIn(phrase), has_(Features.CLASS, WordClass.Verb));
+				any(s.tokensIn(phrase), has_(CLASS, Verb));
 			if (hasVerb && (s.size() > high)) {
-				Token next = s.tokens().get(high);
-				if (next.get(Features.CLASS) == WordClass.Punctuation) {
+				Token next = s.token(high);
+				if (next.has(CLASS, Punctuation)) {
 					clauses.add(low, high);
 					low = Integer.MAX_VALUE;
 					high = Integer.MIN_VALUE;
@@ -24,8 +27,11 @@ public class ClauseChunk implements Processor {
 				}
 			}
 		}
-		if (low < high)
-			clauses.add(low, high);
+		if (low < high) {
+			// bit of a hack: ignore punctuation at end
+			if ((low < (high-1)) || !s.token(low).has(CLASS, Punctuation))
+				clauses.add(low, high);
+		}
 		s.set(Features.CLAUSES, clauses);
 	}
 }

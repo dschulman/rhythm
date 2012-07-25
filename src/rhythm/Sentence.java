@@ -42,6 +42,10 @@ public class Sentence extends Features {
 		return tokens;
 	}
 	
+	public Token token(int index) {
+		return tokens.get(index);
+	}
+	
 	public ImmutableList<Token> tokensIn(Interval i) {
 		return tokens.subList(i.low(), i.high());
 	}

@@ -1,5 +1,7 @@
 package rhythm;
 
+import static rhythm.PhraseType.*;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -23,27 +25,43 @@ public class PhraseChunk implements Processor {
 		String[] text = s.tokensTextArray();
 		String[] tags = s.tokensArray(Features.TAG, String.class);
 		Intervals phrases = new Intervals();
+		int at = 0;
 		for (Span span : chunker.chunkAsSpans(text, tags)) {
-			Interval phrase = phrases.add(span.getStart(), span.getEnd());
-			phrase.set(Features.TAG, span.getType());
-			phrase.maybeSet(Features.PHRASE_TYPE, asPtype(span.getType()));
+			for (; at<span.getStart(); at++)
+				addPhrase(phrases, at, at+1, "O");
+			addPhrase(phrases, span.getStart(), span.getEnd(), span.getType());
+			at = span.getEnd();
 		}
+		for (; at<s.size(); at++)
+			addPhrase(phrases, at, at+1, "O");
 		s.set(Features.PHRASES, phrases);
+	}
+	
+	private void addPhrase(Intervals phrases, int low, int high, String tag) {
+		Interval phrase = phrases.add(low,  high);
+		phrase.set(Features.TAG, tag);
+		phrase.maybeSet(Features.PHRASE_TYPE, asPtype(tag));
 	}
 
 	private PhraseType asPtype(String s) {
 		if (s.startsWith("NP"))
-			return PhraseType.NounPhrase;
+			return NounPhrase;
 		else if (s.startsWith("VP"))
-			return PhraseType.VerbPhrase;
+			return VerbPhrase;
 		else if (s.startsWith("ADVP"))
-			return PhraseType.AdverbPhrase;
+			return AdverbPhrase;
         else if (s.startsWith("ADJP"))
-        	return PhraseType.AdjectivePhrase;
+        	return AdjectivePhrase;
         else if (s.startsWith("PP"))
-        	return PhraseType.PrepositionPhrase;
-        else if (s.startsWith("O"))    
-        	return PhraseType.CoordinatingConjuctionPhrase;
+        	return PrepositionPhrase;
+        else if (s.startsWith("SBAR"))
+        	return SubordinatingConjunctionPhrase;
+        else if (s.startsWith("CONJ"))
+        	return CoordinatingConjuctionPhrase;
+        else if (s.startsWith("INTJ"))
+        	return InterjectionPhrase;
+        else if (s.startsWith("O"))
+        	return NonPhraseToken;
         else
         	return null;
 	}
