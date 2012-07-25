@@ -10,5 +10,6 @@ public enum WordClass {
 	Numeral,
 	Preposition,
 	Determiner,
+	CoordinatingConjunction,
 	Punctuation
 }

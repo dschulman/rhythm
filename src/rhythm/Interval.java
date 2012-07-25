@@ -27,6 +27,10 @@ public class Interval extends Features {
 		return high <= low;
 	}
 	
+	public boolean single() {
+		return high==(low+1);
+	}
+	
 	public boolean contains(int x) {
 		return (x >= low) && (x < high);
 	}

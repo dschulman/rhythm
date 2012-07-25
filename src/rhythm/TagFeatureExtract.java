@@ -29,6 +29,8 @@ public class TagFeatureExtract implements Processor {
 			return WordClass.Preposition;
 		else if (tag.startsWith("DT"))
 			return WordClass.Determiner;
+		else if (tag.startsWith("CC"))
+			return WordClass.CoordinatingConjunction;
 		else if ((tag.length()==1) && !Character.isLetterOrDigit(tag.charAt(0)))
 			return WordClass.Punctuation;
 		else
