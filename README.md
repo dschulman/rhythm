@@ -29,6 +29,7 @@ OpenNLP model files can be downloaded from <http://opennlp.sourceforge.net/model
 Rhythm will need models for 
 [sentence detection](http://opennlp.sourceforge.net/models-1.5/en-sent.bin),
 [tokenization](http://opennlp.sourceforge.net/models-1.5/en-token.bin),
+[detokenization](http://svn.apache.org/viewvc/opennlp/trunk/opennlp-tools/lang/en/tokenizer/en-detokenizer.xml?view=co),
 [part of speech tagging](http://opennlp.sourceforge.net/models-1.5/en-pos-maxent.bin),
 and [phrase chunking](http://opennlp.sourceforge.net/models-1.5/en-chunker.bin).
 
