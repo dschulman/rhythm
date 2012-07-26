@@ -31,6 +31,7 @@ public class Rhythm {
 	
 	public static ImmutableList<Processor> stdAnalysis(Configuration conf) throws IOException {
 		return ImmutableList.of(
+			new TokenMerge(conf),
 			new Tag(conf),
 			new TagFeatureExtract(),
 			new Lemmatize(conf),

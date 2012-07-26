@@ -84,7 +84,7 @@ public class BeatXmlCompiler implements Compiler {
 			throws XMLStreamException {
 		if (t == null)
 			return;
-		if (t.get(Features.CLASS) != WordClass.Punctuation)
+		if (! t.is(Features.MERGE_LEFT))
 			w.writeCharacters(" ");
 		w.writeCharacters(t.text());
 	}

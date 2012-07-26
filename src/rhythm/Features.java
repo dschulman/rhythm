@@ -117,6 +117,9 @@ public class Features {
 	
 	public static final Feature<Double> LONGITUDINAL_EFFECT_MULTIPLIER = Feature.named("LONGITUDINAL_EFFECT_MULTIPLIER");
 	
+	public static final Feature<Void> MERGE_LEFT = Feature.named("MERGE_LEFT");
+	public static final Feature<Void> MERGE_RIGHT = Feature.named("MERGE_RIGHT");
+	
 	// slow; primarily for console testing
 	public boolean clearByName(String name) {
 		for (Iterator<Feature<?>> it = features.keySet().iterator(); it.hasNext();) {
