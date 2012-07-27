@@ -6,6 +6,7 @@ import static com.google.common.collect.Iterables.concat;
 import java.io.IOException;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 
@@ -107,10 +108,19 @@ public class Rhythm {
 		return new Rhythm(tokenizer, analysis, generation, filtering, output);
 	}
 	
+	public Iterable<Processor> allProcessors() {
+		return concat(analysis, generation, filtering);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <T extends Processor> T get(Class<T> type) {
+		return (T) Iterables.find(allProcessors(), Predicates.instanceOf(type));
+	}
+	
 	public Iterable<String> process(Context c, String input) {
 		Iterable<Sentence> ss = tokenizer.process(input);
 		for (Sentence s : ss)
-			for (Processor p : concat(analysis, generation, filtering))
+			for (Processor p : allProcessors())
 				p.process(c, s);
 		return Iterables.transform(ss, output);
 	}
