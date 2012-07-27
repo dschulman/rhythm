@@ -5,6 +5,14 @@ import static rhythm.DiscourseMarker.Ack;
 import static rhythm.Features.*;
 
 public class HeadnodAckGenerator implements Processor {
+	public double p = DefaultP;
+	public static final double DefaultP = 0.5; // arbitrary base rate
+	
+	public HeadnodAckGenerator p(double p) {
+		this.p = p;
+		return this;
+	}
+	
 	public void process(Context c, Sentence s) {
 		// looking for short, backchannel-like utterances (e.g., "ok, great")
 		// TODO this should be in language analysis, not behavior generation
@@ -18,7 +26,7 @@ public class HeadnodAckGenerator implements Processor {
 			if (dm.containing(0) != null)
 				if (any(dm, has_(MARKER_TYPE, Ack)))
 					s.addBehavior("headnod", 0)
-					 .probability(0.5); // arbitrary base rate
+					 .probability(p);
 		}
 	}
 }

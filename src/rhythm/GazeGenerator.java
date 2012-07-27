@@ -6,6 +6,36 @@ import static rhythm.Features.INFORMATION_STRUCTURE;
 import java.util.Iterator;
 
 public class GazeGenerator implements Processor {
+	private double themeAtStartP = DefaultThemeAtStartP;
+	private double themeAfterStartP = DefaultThemeAfterStartP;
+	private double rhemeAtEndP = DefaultRhemeAtEndP;
+	private double rhemeBeforeEndP = DefaultRhemeBeforeEndP;
+	
+	public static final double DefaultThemeAtStartP = 1.0;
+	public static final double DefaultThemeAfterStartP = 0.7;
+	public static final double DefaultRhemeAtEndP = 1.0;
+	public static final double DefaultRhemeBeforeEndP = 0.73;
+	
+	public GazeGenerator themeAtStartP(double p) {
+		themeAtStartP = p;
+		return this;
+	}
+	
+	public GazeGenerator themeAfterStartP(double p) {
+		themeAfterStartP = p;
+		return this;
+	}
+	
+	public GazeGenerator rhemeAtEndP(double p) {
+		rhemeAtEndP = p;
+		return this;
+	}
+	
+	public GazeGenerator rhemeBeforeEndP(double p) {
+		 rhemeBeforeEndP = p;
+		 return this;
+	}
+	
 	public void process(Context c, Sentence s) {
 		boolean first = true;
 		Iterator<Interval> it = s.get(INFORMATION_STRUCTURE).iterator();
@@ -23,13 +53,13 @@ public class GazeGenerator implements Processor {
 		case Theme:
 			s.addBehavior("gaze", info)
 			 .priority(1)
-			 .probability(isStart ? 1 : 0.7)
+			 .probability(isStart ? themeAtStartP : themeAfterStartP)
 			 .set(DIRECTION, "AWAY");
 			break;
 		case Rheme:
 			s.addBehavior("gaze", info)
 			 .priority(5)
-			 .probability(isEnd ? 1 : 0.73)
+			 .probability(isEnd ? rhemeAtEndP : rhemeBeforeEndP)
 			 .set(DIRECTION, "TOWARDS");
 			break;
 		}
