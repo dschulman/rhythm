@@ -55,6 +55,24 @@ public class Intervals implements Iterable<Interval> {
 		};
 	}
 	
+	public Iterable<Interval> startingIn(final Interval i) {
+		return new Iterable<Interval>() {
+			public Iterator<Interval> iterator() {
+				final Iterator<Interval> inner = ints.tailSet(i).iterator();
+				return new AbstractIterator<Interval>() {
+					protected Interval computeNext() {
+						if (inner.hasNext()) {
+							Interval next = inner.next();
+							if (i.contains(next.low()))
+								return next;
+						}
+						return endOfData();
+					}
+				};
+			}
+		};
+	}
+	
 	@Override
 	public String toString() {
 		return ints.toString();

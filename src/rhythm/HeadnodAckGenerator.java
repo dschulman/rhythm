@@ -4,29 +4,59 @@ import static com.google.common.collect.Iterables.any;
 import static rhythm.DiscourseMarker.Ack;
 import static rhythm.Features.*;
 
+import com.google.common.collect.Iterables;
+
 public class HeadnodAckGenerator implements Processor {
-	public double p = DefaultP;
-	public static final double DefaultP = 0.5; // arbitrary base rate
+	private double ackP = DefaultAckP;
+	private double otherMarkerP = DefaultOtherMarkerP;
+	private double noMarkerP = DefaultNoMarkerP;
 	
-	public HeadnodAckGenerator p(double p) {
-		this.p = p;
+	// these rates have no empirical basis, sorry:
+	public static final double DefaultAckP = 0.8;
+	public static final double DefaultOtherMarkerP = 0.5;
+	public static final double DefaultNoMarkerP = 0.2;
+	
+	public HeadnodAckGenerator ackP(double p) {
+		ackP = p;
 		return this;
 	}
 	
+	public HeadnodAckGenerator otherMarkerP(double p) {
+		otherMarkerP = p;
+		return this;
+	}
+	
+	public HeadnodAckGenerator noMarkerP(double p) {
+		noMarkerP = p;
+		return this;
+	}
+	
+	private static final Interval beginning = new Interval(0, 8);
+	
 	public void process(Context c, Sentence s) {
-		// looking for short, backchannel-like utterances (e.g., "ok, great")
-		// TODO this should be in language analysis, not behavior generation
-		// A quick heuristic rule for that:
-		// 1) Starts a turn (i.e. must be responding to partner)
-		// 1) Short (<= 8 tokens)
-		// 2) Starts with a discourse marker
-		// 3) Includes an acknowledgment-type discourse marker ("ok")
-		if (s.is(TURN_START) && (s.size()<=8)) {
-			Intervals dm = s.get(DISCOURSE_MARKERS);
-			if (dm.containing(0) != null)
-				if (any(dm, has_(MARKER_TYPE, Ack)))
-					s.addBehavior("headnod", 0)
-					 .probability(p);
+		// Trying to put headnods on the beginnings of turn that do some
+		// grounding.  We should really be looking at what the user says,
+		// not just the agent, so this is some very hand-wavy heuristics
+		// instead...
+		//
+		// We look for discourse markers appearing near the beginning of
+		// the turn (within 8 tokens), and generate a headnod stochastically:
+		// 1) high prob: if there's an acknowledgement marker ("ok")
+		// 2) medium prob: any other discourse markers
+		// 3) low prob: no markers at all.
+		if (s.is(TURN_START)) {
+			double p = generate(s.get(DISCOURSE_MARKERS).startingIn(beginning));
+			if (p > 0)
+				s.addBehavior("headnod", 0).probability(p);
 		}
+	}
+	
+	private double generate(Iterable<Interval> markers) {
+		if (any(markers, has_(MARKER_TYPE, Ack)))
+			return ackP;
+		else if (!Iterables.isEmpty(markers))
+			return otherMarkerP;
+		else
+			return noMarkerP;
 	}
 }
