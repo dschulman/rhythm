@@ -35,9 +35,10 @@ public class HeadnodAckGenerator implements Processor {
 	
 	public void process(Context c, Sentence s) {
 		// Trying to put headnods on the beginnings of turn that do some
-		// grounding.  We should really be looking at what the user says,
-		// not just the agent, so this is some very hand-wavy heuristics
-		// instead...
+		// grounding (acknowledgment).  We should really be looking at
+		// what the user says, but we don't do that right now, so we
+		// either go by manual annotation, or do some very hand-wavy
+		// heuristics:
 		//
 		// We look for discourse markers appearing near the beginning of
 		// the turn (within 8 tokens), and generate a headnod stochastically:
@@ -45,18 +46,21 @@ public class HeadnodAckGenerator implements Processor {
 		// 2) medium prob: any other discourse markers
 		// 3) low prob: no markers at all.
 		if (s.is(TURN_START)) {
-			double p = generate(s.get(DISCOURSE_MARKERS).startingIn(beginning));
+			double p;
+			if (s.is(GROUNDING_ACK) || c.is(GROUNDING_ACK))
+				p = ackP;
+			else {
+				Iterable<Interval> markers = s.get(DISCOURSE_MARKERS).startingIn(beginning);
+				if (any(markers, has_(MARKER_TYPE, Ack)))
+					p = ackP;
+				else if (!Iterables.isEmpty(markers))
+					p = otherMarkerP;
+				else
+					p = noMarkerP;
+			}
+			
 			if (p > 0)
 				s.addBehavior("headnod", 0).probability(p);
 		}
-	}
-	
-	private double generate(Iterable<Interval> markers) {
-		if (any(markers, has_(MARKER_TYPE, Ack)))
-			return ackP;
-		else if (!Iterables.isEmpty(markers))
-			return otherMarkerP;
-		else
-			return noMarkerP;
 	}
 }

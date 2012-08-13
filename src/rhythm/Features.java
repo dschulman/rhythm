@@ -51,6 +51,11 @@ public class Features {
 		return features.containsKey(key);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public <T> T clear(Feature<?> key) {
+		return (T) features.remove(key);
+	}
+	
 	public void clearAllFeatures() {
 		features.clear();
 	}
@@ -100,6 +105,7 @@ public class Features {
 	public static final Feature<Void> TURN_END = Feature.named("TURN_END");
 	
 	public static final Feature<AffectiveContent> AFFECT = Feature.named("AFFECT");
+	public static final Feature<Void> GROUNDING_ACK = Feature.named("GROUNDING_ACK");
 	
 	public static final Feature<Void> FILTERED = Feature.named("FILTERED");
 	
