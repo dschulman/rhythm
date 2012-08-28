@@ -11,7 +11,7 @@ public class HeadnodAckLongitudinal implements Processor {
 	private double sessionAllianceB = DefaultSessionAllianceB;
 	
 	public static final double DefaultSessionB = 0.06;
-	public static final double DefaultLastB = -0.04;
+	public static final double DefaultLastB = -0.44;
 	public static final double DefaultAllianceB = -0.28;
 	public static final double DefaultSessionAllianceB = 0.06;
 	
