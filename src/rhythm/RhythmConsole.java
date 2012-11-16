@@ -75,9 +75,11 @@ public class RhythmConsole {
 	
 	private void cmdOutput(String[] args) {
 		if (args.length != 2)
-			System.out.println("Usage: output (beat|string)");
+			System.out.println("Usage: output (beat|bml|string)");
 		else if ("beat".startsWith(args[1]))
 			rhythm = rhythm.setOutput(new BeatXmlCompiler());
+		else if ("bml".startsWith(args[1]))
+			rhythm = rhythm.setOutput(new BmlCompiler());
 		else if ("string".startsWith(args[1]))
 			rhythm = rhythm.setOutput(Compiler.ToString);
 		else

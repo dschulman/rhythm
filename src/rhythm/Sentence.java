@@ -119,8 +119,7 @@ public class Sentence extends Features {
 						List<Behavior> tEnding = Lists.newArrayList();
 						while (ending.hasNext() && ending.peek().high()<=n)
 							tEnding.add(ending.next());
-						n++;
-						return new AnnotatedToken(t, tStarting, tEnding);
+						return new AnnotatedToken(t, n++, tStarting, tEnding);
 					}
 				};
 			}

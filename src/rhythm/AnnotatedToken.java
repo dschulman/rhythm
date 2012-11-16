@@ -4,12 +4,14 @@ import com.google.common.base.Objects;
 
 public final class AnnotatedToken {
 	private final Token token;
+	private final int index;
 	private final Iterable<Behavior> starting, ending;
 	
-	public AnnotatedToken(Token token, 
+	AnnotatedToken(Token token, int index, 
 			Iterable<Behavior> starting,
 			Iterable<Behavior> ending) {
 		this.token = token;
+		this.index = index;
 		this.starting = starting;
 		this.ending = ending;
 	}
@@ -24,6 +26,10 @@ public final class AnnotatedToken {
 	
 	public Iterable<Behavior> ending() {
 		return ending;
+	}
+	
+	public int index() {
+		return index;
 	}
 	
 	@Override
